@@ -8,7 +8,8 @@ class Espace extends Model
 {
     protected $fillable = [
         'nom',
-        'status',
+        'disponible',
+        'categories_id',
         'surface',
         'ecran',
         'tableau_blanc'

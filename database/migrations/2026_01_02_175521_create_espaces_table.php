@@ -13,7 +13,7 @@ return new class extends Migration {
         Schema::create('espaces', function (Blueprint $table) {
             $table->id();
             $table->string('nom');
-            $table->boolean('status');
+            $table->boolean('disponible');
             $table->foreignId('categories_id');
             $table->integer('surface');
             $table->boolean('ecran');
