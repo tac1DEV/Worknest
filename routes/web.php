@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 use Livewire\Volt\Volt;
 use App\Http\Controllers\CategorieController;
+use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\EspaceController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -32,4 +34,7 @@ Route::middleware(['auth'])->group(function () {
         ->name('dashboard');
 
     Route::resource('categories', CategorieController::class);
+    Route::resource('reservations', ReservationController::class);
+    Route::resource('espaces', EspaceController::class);
+
 });
