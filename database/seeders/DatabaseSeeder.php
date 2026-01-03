@@ -3,8 +3,12 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\Categorie;
+use App\Models\Espace;
+use App\Models\Reservation;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,15 +17,29 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
 
         User::firstOrCreate(
             ['email' => 'test@example.com'],
             [
                 'name' => 'Test User',
                 'password' => 'password',
+                'role' => 'admin',
                 'email_verified_at' => now(),
+                'remember_token' => Str::random(10),
             ]
         );
+        $categories = ['Standard', 'Premium', 'VIP'];
+        $prix = [10, 45, 100];
+
+        foreach ($categories as $index => $nom) {
+            Categorie::create([
+                'nom_categorie' => $nom,
+                'prix' => $prix[$index],
+            ]);
+        }
+
+        User::factory(10)->create();
+        Espace::factory(10)->create();
+        Reservation::factory(10)->create();
     }
 }
