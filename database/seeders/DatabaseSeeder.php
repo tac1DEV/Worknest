@@ -21,11 +21,9 @@ class DatabaseSeeder extends Seeder
         User::firstOrCreate(
             ['email' => 'test@example.com'],
             [
-                'name' => 'Test User',
+                'username' => 'Test User',
                 'password' => 'password',
                 'role' => 'admin',
-                'email_verified_at' => now(),
-                'remember_token' => Str::random(10),
             ]
         );
         $categories = ['Standard', 'Premium', 'VIP'];
