@@ -6,6 +6,7 @@ use Livewire\Volt\Volt;
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\EspaceController;
+use App\Http\Middleware\IsAdminMiddleware;
 
 Route::get('/', function () {
     return view('welcome');
@@ -33,7 +34,7 @@ Route::middleware(['auth'])->group(function () {
         ->middleware(['verified'])
         ->name('dashboard');
 
-    Route::resource('categories', CategorieController::class);
+    Route::resource('categories', CategorieController::class)->middleware(IsAdminMiddleware::class);
     Route::resource('reservations', ReservationController::class);
     Route::resource('espaces', EspaceController::class);
 

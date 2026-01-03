@@ -17,8 +17,10 @@
             <flux:navlist.group :heading="__('Platform')" class="grid">
                 <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')"
                     wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
+                    @if(auth()->user()->role === 'admin')
                 <flux:navlist.item :href="route('categories.index')" :current="request()->routeIs('categories.index')"
                     wire:navigate>{{ __('Categories') }}</flux:navlist.item>
+                    @endif
                 <flux:navlist.item :href="route('reservations.index')" :current="request()->routeIs('reservations.index')"
                     wire:navigate>{{ __('Réservations') }}</flux:navlist.item>
                 <flux:navlist.item :href="route('espaces.index')" :current="request()->routeIs('espaces.index')"
