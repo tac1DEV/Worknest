@@ -19,6 +19,10 @@
                     wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
                 <flux:navlist.item :href="route('categories.index')" :current="request()->routeIs('categories.index')"
                     wire:navigate>{{ __('Categories') }}</flux:navlist.item>
+                <flux:navlist.item :href="route('reservations.index')" :current="request()->routeIs('reservations.index')"
+                    wire:navigate>{{ __('Réservations') }}</flux:navlist.item>
+                <flux:navlist.item :href="route('espaces.index')" :current="request()->routeIs('espaces.index')"
+                    wire:navigate>{{ __('Espaces') }}</flux:navlist.item>
             </flux:navlist.group>
         </flux:navlist>
 
