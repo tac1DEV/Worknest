@@ -8,34 +8,37 @@ use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\EspaceController;
 use App\Http\Middleware\IsAdminMiddleware;
 
+//Anonyme
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
+Route::get('/espaces', [EspaceController::class, 'index'])->name('espaces.index');
 
+//Connecté
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
+    Route::view('dashboard', 'dashboard')->name('dashboard');
 
     Volt::route('settings/profile', 'settings.profile')->name('profile.edit');
     Volt::route('settings/password', 'settings.password')->name('user-password.edit');
     Volt::route('settings/appearance', 'settings.appearance')->name('appearance.edit');
 
-    Volt::route('settings/two-factor', 'settings.two-factor')
-        ->middleware(
-            when(
-                Features::canManageTwoFactorAuthentication()
-                && Features::optionEnabled(Features::twoFactorAuthentication(), 'confirmPassword'),
-                ['password.confirm'],
-                [],
-            ),
-        )
-        ->name('two-factor.show');
-
-    Route::view('dashboard', 'dashboard')
-        ->middleware(['verified'])
-        ->name('dashboard');
-
-    Route::resource('categories', CategorieController::class)->middleware(IsAdminMiddleware::class);
     Route::resource('reservations', ReservationController::class);
-    Route::resource('espaces', EspaceController::class);
+    Route::get('/espaces', [EspaceController::class, 'index'])->name('espaces.index');
 
+    //ADMIN
+    Route::get('admin/', function () {
+        return redirect('/admin/dashboard');
+    })->middleware(IsAdminMiddleware::class);
+    Route::view('admin/dashboard', 'dashboard')->middleware(IsAdminMiddleware::class)->name('admin.dashboard');
+
+    Route::prefix('admin')
+        ->as('admin.')
+        ->middleware(IsAdminMiddleware::class)
+        ->group(function () {
+
+            Route::resource('espaces', EspaceController::class);
+            Route::resource('reservations', ReservationController::class);
+            Route::resource('categories', CategorieController::class);
+        });
 });
