@@ -13,7 +13,10 @@ class EspaceController extends Controller
     public function index()
     {
         $espaces = Espace::all();
-        return view('espaces.index', compact('espaces'));
+        if (auth()->user()->role !== 'admin') {
+            return view('espaces.index', compact('espaces'));
+        }
+        return view('admin.espaces.index', compact('espaces'));
     }
 
     public function indexAdmin()
