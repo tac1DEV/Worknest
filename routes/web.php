@@ -9,9 +9,8 @@ use App\Http\Controllers\EspaceController;
 use App\Http\Middleware\IsAdminMiddleware;
 
 //Anonyme
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::view('/', 'landingpage')->name('home');
+Route::view('/rgpd', 'rgpd')->name('rgpd');
 Route::get('/espaces', [EspaceController::class, 'index'])->name('espaces.index');
 
 //Connecté
