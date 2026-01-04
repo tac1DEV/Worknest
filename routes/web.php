@@ -36,10 +36,8 @@ Route::middleware(['auth'])->group(function () {
         ->as('admin.')
         ->middleware(IsAdminMiddleware::class)
         ->group(function () {
-
-            Route::resource('espaces', EspaceController::class)
-                ->name('indexAdmin', 'admin.espaces.index');
-            Route::resource('reservations', ReservationController::class);
+            Route::view('admin/dashboard', 'dashboard');
+            Route::resource('espaces', EspaceController::class);
             Route::resource('categories', CategorieController::class);
         });
 });
