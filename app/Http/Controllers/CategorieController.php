@@ -35,7 +35,7 @@ class CategorieController extends Controller
             'prix' => $request->input('prix'),
         ]);
 
-        return redirect()->route('categories.index');
+        return redirect()->route('admin.categories.index');
     }
 
     /**
@@ -63,7 +63,7 @@ class CategorieController extends Controller
             'nom_categorie' => $request->input('nom_categorie'),
             'prix' => $request->input('prix'),
         ]);
-        return redirect()->route('categories.index');
+        return redirect()->route('admin.categories.index');
     }
 
 
@@ -73,7 +73,7 @@ class CategorieController extends Controller
     public function destroy(Categorie $category)
     {
         $category->delete();
-        return redirect()->route('categories.index');
+        return redirect()->route('admin.categories.index');
     }
 
 }

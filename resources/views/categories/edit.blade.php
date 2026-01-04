@@ -1,5 +1,5 @@
 <x-layouts.app :title="__('Modifier une catégorie')">
-    <form method="POST" action="{{ route('categories.update', $category) }}">
+    <form method="POST" action="{{ route('admin.categories.update', $category) }}">
         @csrf
         @method('PUT')
 

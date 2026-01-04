@@ -1,5 +1,5 @@
 <x-layouts.app :title="__('Créer une catégorie')">
-    <form method="POST" action="{{ route('categories.store') }}">
+    <form method="POST" action="{{ route('admin.categories.store') }}">
         @csrf
         <div>
             <label for="nom_categorie">Nom catégorie:</label>
