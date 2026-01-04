@@ -1,5 +1,5 @@
 <x-layouts.app :title="__('Créer un espace')">
-    <form method="POST" action="{{ route('espaces.store') }}">
+    <form method="POST" action="{{ route('admin.espaces.store') }}">
         @csrf
         <div>
             <label for="nom">Nom de l'espace:</label>

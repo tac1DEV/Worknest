@@ -1,4 +1,5 @@
 <x-layouts.app :title="__('Espaces')">
+    <a href="{{ route('admin.espaces.create') }}">Ajouter un nouvel espace</a>
     <table>
         <thead>
             <tr>
@@ -7,6 +8,7 @@
                 <th>Surface</th>
                 <th>Écran</th>
                 <th>Tableau blanc</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -17,7 +19,14 @@
                     <td>{{ $espace->surface }}</td>
                     <td>{{ $espace->ecran }}</td>
                     <td>{{ $espace->tableau_blanc }}</td>
-                    
+                    <td class="flex">
+                        <a href="{{ route('admin.espaces.edit', $espace) }}">Edit</a>
+                        <form method="POST" action="{{ route('admin.espaces.destroy', $espace) }}">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" onclick="return confirm('Are you sure?')">Delete</button>
+                        </form>
+                    </td>
                 </tr>
             @endforeach
         </tbody>

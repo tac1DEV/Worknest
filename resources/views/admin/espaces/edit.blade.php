@@ -1,5 +1,5 @@
 <x-layouts.app :title="__('Modifier un espace')">
-    <form method="POST" action="{{ route('espaces.update', $espace) }}">
+    <form method="POST" action="{{ route('admin.espaces.update', $espace) }}">
         @csrf
         @method('PUT')
 
