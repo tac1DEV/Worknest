@@ -23,21 +23,27 @@ Route::middleware(['auth'])->group(function () {
     Volt::route('settings/password', 'settings.password')->name('user-password.edit');
     Volt::route('settings/appearance', 'settings.appearance')->name('appearance.edit');
 
+
     Route::resource('reservations', ReservationController::class);
-    Route::get('/espaces', [EspaceController::class, 'index'])->name('espaces.index');
+    Route::get('/reservations/{espace}/calendar', [ReservationController::class, 'calendar'])
+        ->name('reservations.calendar');
+    //liste + detail
+    Route::resource('espaces', EspaceController::class)->except(['index']);
 
     //ADMIN
-    Route::get('admin/', function () {
-        return redirect('/admin/dashboard');
-    })->middleware(IsAdminMiddleware::class);
-    Route::view('admin/dashboard', 'dashboard')->middleware(IsAdminMiddleware::class)->name('admin.dashboard');
-
     Route::prefix('admin')
         ->as('admin.')
         ->middleware(IsAdminMiddleware::class)
         ->group(function () {
-            Route::view('admin/dashboard', 'dashboard');
+
+            Route::get('/', function () {
+                return redirect()->route('admin.dashboard');
+            });
+
+            Route::view('dashboard', 'dashboard')->name('dashboard');
+
             Route::resource('espaces', EspaceController::class);
             Route::resource('categories', CategorieController::class);
         });
+
 });

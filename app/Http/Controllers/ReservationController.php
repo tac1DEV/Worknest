@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Reservation;
+use App\Models\Espace;
 use Illuminate\Http\Request;
 
 class ReservationController extends Controller
@@ -76,5 +77,10 @@ class ReservationController extends Controller
     {
         $reservation->delete();
         return redirect()->route('reservations.index');
+    }
+
+    public function calendar(Reservation $reservation, Espace $espace)
+    {
+        return view('reservations.calendar', compact('reservation', 'espace'));
     }
 }

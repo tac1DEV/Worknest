@@ -7,6 +7,7 @@
                 <th>Surface</th>
                 <th>Écran</th>
                 <th>Tableau blanc</th>
+                <th>Détails</th>
             </tr>
         </thead>
         <tbody>
@@ -17,7 +18,8 @@
                     <td>{{ $espace->surface }}</td>
                     <td>{{ $espace->ecran }}</td>
                     <td>{{ $espace->tableau_blanc }}</td>
-                    
+                    <td>
+    <a href="{{ route('espaces.show',$espace->id) }}">Voir détails</a></td>
                 </tr>
             @endforeach
         </tbody>

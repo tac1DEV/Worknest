@@ -13,7 +13,7 @@ class EspaceController extends Controller
     public function index()
     {
         $espaces = Espace::all();
-        if (auth()->user()->role !== 'admin') {
+        if (!auth()->check() || auth()->user()->role !== 'admin') {
             return view('espaces.index', compact('espaces'));
         }
         return view('admin.espaces.index', compact('espaces'));
@@ -55,7 +55,7 @@ class EspaceController extends Controller
      */
     public function show(Espace $espace)
     {
-        //
+        return view('espaces.show', compact('espace'));
     }
 
     /**
@@ -90,4 +90,5 @@ class EspaceController extends Controller
         $espace->delete();
         return redirect()->route('espaces.index');
     }
+
 }
