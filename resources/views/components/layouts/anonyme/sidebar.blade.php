@@ -33,16 +33,16 @@
             <flux:navlist.group :heading="__('Platform')" class="grid">
                 <flux:navlist.item icon="home" :href=" route('home')" :current="request()->routeIs('home')"
                     wire:navigate>{{ __('Page d\'accueil') }}</flux:navlist.item>
-                <flux:navlist.item :href=" route('espaces.index')" :current="request()->routeIs('espaces.index')"
-                    wire:navigate>{{ __('Espaces') }}</flux:navlist.item>
+                <flux:navlist.item icon="clipboard-list" :href=" route('espaces.index')"
+                    :current="request()->routeIs('espaces.index')" wire:navigate>{{ __('Espaces') }}</flux:navlist.item>
             </flux:navlist.group>
         </flux:navlist>
 
         <flux:spacer />
 
         <flux:navlist variant="outline">
-                <flux:navlist.item :href=" route('rgpd')" :current="request()->routeIs('rgpd')"
-                    wire:navigate>{{ __('Protection des données') }}</flux:navlist.item>
+            <flux:navlist.item icon="shield-check" :href=" route('rgpd')" :current="request()->routeIs('rgpd')"
+                wire:navigate>{{ __('Protection des données') }}</flux:navlist.item>
         </flux:navlist>
 
         <!-- Desktop User Menu -->
