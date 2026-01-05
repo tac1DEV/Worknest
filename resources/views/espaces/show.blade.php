@@ -8,9 +8,9 @@
         <label for="surface">Surface:</label>
         <p>{{ $espace->surface }}</p>
         <label for="ecran">Écran:</label>
-        <p>{{$espace->ecran == 0 ? 'oui' : 'non'}}</p>
+        <p>{{$espace->ecran ? 'oui' : 'non'}}</p>
         <label for="tableau_blanc">Tableau blanc:</label>
-        <p>{{$espace->tableau_blanc == 0 ? 'oui' : 'non'}}</p>
+        <p>{{$espace->tableau_blanc ? 'oui' : 'non'}}</p>
     </div>
     <a href="{{ route('reservations.calendar', $espace->id) }}">Voir planning</a>
  </x-layouts.app>

@@ -4,7 +4,6 @@
         <thead>
             <tr>
                 <th>Nom de l'espace</th>
-                <th>Disponible</th>
                 <th>Surface</th>
                 <th>Écran</th>
                 <th>Tableau blanc</th>
@@ -12,13 +11,12 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($espaces as $espace)
+            @foreach($espacesUsers as $espace)
                 <tr>
                     <td>{{ $espace->nom }}</td>
-                    <td>{{ $espace->disponible }}</td>
-                    <td>{{ $espace->surface }}</td>
-                    <td>{{ $espace->ecran }}</td>
-                    <td>{{ $espace->tableau_blanc }}</td>
+                    <td>{{ $espace->surface ? 'oui' : 'non'}}</td>
+                    <td>{{ $espace->ecran ? 'oui' : 'non'}}</td>
+                    <td>{{ $espace->tableau_blanc ? 'oui' : 'non'}}</td>
                     <td>
                         <a href="{{ route('espaces.show', $espace->id) }}">Voir détails</a>
                     </td>
@@ -33,7 +31,6 @@
         <thead>
             <tr>
                 <th>Nom de l'espace</th>
-                <th>Disponible</th>
                 <th>Surface</th>
                 <th>Écran</th>
                 <th>Tableau blanc</th>
@@ -41,13 +38,12 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($espaces as $espace)
+            @foreach($espacesUsers as $espace)
                 <tr>
                     <td>{{ $espace->nom }}</td>
-                    <td>{{ $espace->disponible }}</td>
-                    <td>{{ $espace->surface }}</td>
-                    <td>{{ $espace->ecran }}</td>
-                    <td>{{ $espace->tableau_blanc }}</td>
+                    <td>{{ $espace->surface ? 'oui' : 'non'}}</td>
+                    <td>{{ $espace->ecran ? 'oui' : 'non'}}</td>
+                    <td>{{ $espace->tableau_blanc ? 'oui' : 'non'}}</td>
                     <td>
                         <a href="{{ route('espaces.show', $espace->id) }}">Voir détails</a>
                     </td>

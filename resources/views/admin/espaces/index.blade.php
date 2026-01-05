@@ -15,10 +15,10 @@
             @foreach($espaces as $espace)
                 <tr>
                     <td>{{ $espace->nom }}</td>
-                    <td>{{ $espace->disponible }}</td>
+                    <td>{{ $espace->disponible ? 'oui' : 'non'}}</td>
                     <td>{{ $espace->surface }}</td>
-                    <td>{{ $espace->ecran }}</td>
-                    <td>{{ $espace->tableau_blanc }}</td>
+                    <td>{{ $espace->ecran ? 'oui' : 'non'}}</td>
+                    <td>{{ $espace->tableau_blanc ? 'oui' : 'non'}}</td>
                     <td class="flex">
                         <a href="{{ route('admin.espaces.edit', $espace) }}">Edit</a>
                         <form method="POST" action="{{ route('admin.espaces.destroy', $espace) }}">
