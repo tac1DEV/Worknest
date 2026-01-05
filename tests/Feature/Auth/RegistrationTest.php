@@ -20,7 +20,7 @@ class RegistrationTest extends TestCase
     {
         $response = $this->post(route('register.store'), [
             'name' => 'John Doe',
-            'email' => 'test@example.com',
+            'email' => 'test@mail.com',
             'password' => 'password',
             'password_confirmation' => 'password',
         ]);

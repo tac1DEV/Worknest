@@ -17,15 +17,26 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-
-        User::firstOrCreate(
-            ['email' => 'test@example.com'],
+        $users = [
             [
-                'username' => 'Test User',
+                'email' => 'admin@mail.com',
+                'name' => 'Admin User',
                 'password' => 'password',
-                'role' => 'admin',
-            ]
-        );
+                'role' => 'admin'
+            ],
+            [
+                'email' => 'test@mail.com',
+                'name' => 'Test User',
+                'password' => 'password',
+            ],
+        ];
+
+        foreach ($users as $user) {
+            User::firstOrCreate(
+                ['email' => $user['email']],
+                $user
+            );
+        }
         $categories = ['Standard', 'Premium', 'VIP'];
         $prix = [10, 45, 100];
 
