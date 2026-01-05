@@ -3,13 +3,13 @@
         @csrf
         <div>
             <label for="nom">Nom de l'espace:</label>
-            <input type="text" name="nom" id="nom">
+            <input type="text" name="nom" id="nom" required>
             <label for="disponible">Disponible:</label>
             <input type="checkbox" name="disponible" id="disponible">
             <label for="categories_id">Catégorie :</label>
-            <input type="number" min="0" step="1" name="categories_id" id="categories_id" />
+            <input type="number" min="0" step="1" name="categories_id" id="categories_id" required/>
             <label for="surface">Surface:</label>
-            <input type="number" min="0" step="1" name="surface" id="surface">
+            <input type="number" min="0" step="1" name="surface" id="surface" required>
             <label for="ecran">Écran:</label>
             <input type="checkbox" name="ecran" id="ecran">
             <label for="tableau_blanc">Tableau blanc:</label>
