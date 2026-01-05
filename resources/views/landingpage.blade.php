@@ -1,13 +1,4 @@
 <x-layouts.anonyme :title="__('Worknest - Espaces de coworking')">
-    <!-- WorkNest est un SaaS qui vous permet de  réserver un espace de coworking parmi nos 25 espaces de coworking disponibles en France (salles de réunion, bureaux, zones créatives).
-                            <a
-                            href="{{ url('/espaces') }}"
-                            class="inline-block px-5 py-1.5 dark:text-[#EDEDEC] border-[#19140035] hover:border-[#1915014a] border text-[#1b1b18] dark:border-[#3E3E3A] dark:hover:border-[#62605b] rounded-sm text-sm leading-normal"
-                        >Voir les espaces disponibles</a>
-                            <a
-                            href="{{ url('/register') }}"
-                            class="inline-block px-5 py-1.5 dark:text-[#EDEDEC] border-[#19140035] hover:border-[#1915014a] border text-[#1b1b18] dark:border-[#3E3E3A] dark:hover:border-[#62605b] rounded-sm text-sm leading-normal"
-                        >Je veux réserver</a> -->
     <section class="min-h-screen flex px-6">
         <div class="text-center lg:space-y-24 w-full">
             <h2 class="text-3xl font-semibold text-gray-900 dark:text-[#EDEDEC] leading-snug">
