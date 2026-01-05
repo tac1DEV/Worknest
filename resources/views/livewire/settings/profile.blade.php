@@ -5,8 +5,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rule;
 use Livewire\Volt\Component;
+use Livewire\Attributes\Title;
 
-new class extends Component {
+new #[Title('Profile')] class extends Component {
     public string $name = '';
     public string $email = '';
 
@@ -15,7 +16,7 @@ new class extends Component {
      */
     public function mount(): void
     {
-        $this->name = Auth::user()->username;
+        $this->name = Auth::user()->name;
         $this->email = Auth::user()->email;
     }
 
@@ -28,7 +29,6 @@ new class extends Component {
 
         $validated = $this->validate([
             'name' => ['required', 'string', 'max:255'],
-
             'email' => [
                 'required',
                 'string',
@@ -38,14 +38,15 @@ new class extends Component {
                 Rule::unique(User::class)->ignore($user->id)
             ],
         ]);
-
         $user->fill($validated);
 
         if ($user->isDirty('email')) {
             $user->email_verified_at = null;
         }
-
-        $user->save();
+        Auth::user()->update([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+        ]);
 
         $this->dispatch('profile-updated', name: $user->name);
     }

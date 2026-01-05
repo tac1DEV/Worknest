@@ -21,6 +21,8 @@ Route::middleware(['auth'])->group(function () {
     Volt::route('settings/profile', 'settings.profile')->name('profile.edit');
     Volt::route('settings/password', 'settings.password')->name('user-password.edit');
     Volt::route('settings/appearance', 'settings.appearance')->name('appearance.edit');
+    Volt::route('settings/reservations', 'settings.reservations')->name('reservations.edit');
+    Volt::route('settings/historique', 'settings.historique')->name('historique.edit');
 
 
     Route::resource('reservations', ReservationController::class);
