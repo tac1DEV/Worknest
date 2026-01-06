@@ -22,6 +22,7 @@ Route::get('/payment/cancel', function () {
     return 'Payment Canceled.';
 })->name('payment.cancel');
 
+//Filtres
 Route::get('/apply-filters', [FilterController::class, 'apply'])->name('apply.filters');
 
 //Anonyme
