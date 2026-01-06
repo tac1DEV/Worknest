@@ -7,9 +7,9 @@
             <label for="disponible">Disponible:</label>
             <input type="checkbox" name="disponible" id="disponible">
             <label for="categories_id">Catégorie :</label>
-            <input type="number" min="0" step="1" name="categories_id" id="categories_id" required/>
-            <label for="surface">Surface:</label>
-            <input type="number" min="0" step="1" name="surface" id="surface" required>
+            <input type="number" min="0" step="1" name="categories_id" id="categories_id" required />
+            <label for="capacite">Capacité:</label>
+            <input type="number" min="0" step="1" name="capacite" id="capacite" required>
             <label for="ecran">Écran:</label>
             <input type="checkbox" name="ecran" id="ecran">
             <label for="tableau_blanc">Tableau blanc:</label>

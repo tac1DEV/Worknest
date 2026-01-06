@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Espace;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\QueryBuilder;
+use Spatie\QueryBuilder\AllowedFilter;
 
 class EspaceController extends Controller
 {
@@ -13,11 +15,17 @@ class EspaceController extends Controller
     public function index()
     {
         $espaces = Espace::all();
-        $espacesUsers = Espace::where('disponible', true)->get();
+        $categorie = Espace::find(1)->categorie;
+        // dd($categorie);
+        // $espacesUsers = Espace::where('disponible', true)->get();
+        $espacesUsers = QueryBuilder::for(Espace::where('disponible', true))
+            ->allowedFilters('ecran', 'capacite', 'tableau_blanc', AllowedFilter::exact('categorie.prix'))
+            ->get();
+
         if (!auth()->check() || auth()->user()->role !== 'admin') {
             return view('espaces.index', compact('espacesUsers'));
         }
-        return view('admin.espaces.index', compact('espaces'));
+        return view('admin.espaces.index', compact('espaces', 'espacesUsers'));
     }
 
     /**
@@ -37,7 +45,7 @@ class EspaceController extends Controller
             'nom' => $request->input('nom'),
             'disponible' => $request->has('disponible'),
             'categories_id' => $request->input('categories_id'),
-            'surface' => $request->input('surface'),
+            'capacite' => $request->input('capacite'),
             'ecran' => $request->has('ecran'),
             'tableau_blanc' => $request->has('tableau_blanc')
         ]);
@@ -70,7 +78,7 @@ class EspaceController extends Controller
             'nom' => $request->input('nom'),
             'disponible' => $request->has('disponible'),
             'categories_id' => $request->input('categories_id'),
-            'surface' => $request->input('surface'),
+            'capacite' => $request->input('capacite'),
             'ecran' => $request->has('ecran'),
             'tableau_blanc' => $request->has('tableau_blanc')
         ]);

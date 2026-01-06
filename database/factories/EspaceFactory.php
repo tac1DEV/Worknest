@@ -19,10 +19,10 @@ class EspaceFactory extends Factory
         return [
             'nom' => fake()->name(),
             'disponible' => rand(0, 1),
-            'categories_id' => rand(1, 6),
-            'surface' => rand(20, 1000),
+            'capacite' => rand(20, 1000),
             'ecran' => rand(0, 1),
             'tableau_blanc' => rand(0, 1),
+            'categorie_id' => rand(1, 3),
         ];
     }
 }

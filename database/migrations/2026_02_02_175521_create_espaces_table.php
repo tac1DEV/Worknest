@@ -14,8 +14,8 @@ return new class extends Migration {
             $table->id();
             $table->string('nom');
             $table->boolean('disponible');
-            $table->foreignId('categories_id');
-            $table->integer('surface');
+            $table->foreignId('categorie_id')->constrained('categories');
+            $table->integer('capacite');
             $table->boolean('ecran');
             $table->boolean('tableau_blanc');
             $table->timestamps();

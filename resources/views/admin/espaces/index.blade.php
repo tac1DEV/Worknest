@@ -5,7 +5,7 @@
             <tr>
                 <th>Nom de l'espace</th>
                 <th>Disponible</th>
-                <th>Surface</th>
+                <th>Capacité</th>
                 <th>Écran</th>
                 <th>Tableau blanc</th>
                 <th>Actions</th>
@@ -16,7 +16,7 @@
                 <tr>
                     <td>{{ $espace->nom }}</td>
                     <td>{{ $espace->disponible ? 'oui' : 'non'}}</td>
-                    <td>{{ $espace->surface }}</td>
+                    <td>{{ $espace->capacite }}</td>
                     <td>{{ $espace->ecran ? 'oui' : 'non'}}</td>
                     <td>{{ $espace->tableau_blanc ? 'oui' : 'non'}}</td>
                     <td class="flex">
