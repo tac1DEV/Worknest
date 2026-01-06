@@ -1,5 +1,6 @@
 @if(!auth()->check())
     <x-layouts.anonyme :title="__('Espaces')">
+        <x-layouts.filter></x-layouts.filter>
         <table>
             <thead>
                 <tr>
@@ -29,6 +30,7 @@
     </x-layouts.anonyme>
 @else
     <x-layouts.app :title="__('Espaces')">
+        <x-layouts.filter></x-layouts.filter>
         <table>
             <thead>
                 <tr>

@@ -22,7 +22,10 @@ class EspaceController extends Controller
             ->allowedFilters('ecran', 'capacite', 'tableau_blanc', AllowedFilter::exact('categorie.prix'))
             ->get();
 
-        if (!auth()->check() || auth()->user()->role !== 'admin') {
+        if (!auth()->check()) {
+            return view('espaces.index', compact('espacesUsers'));
+        }
+        if (auth()->user()->role !== 'admin') {
             return view('espaces.index', compact('espacesUsers'));
         }
         return view('admin.espaces.index', compact('espaces', 'espacesUsers'));

@@ -7,6 +7,22 @@ use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\EspaceController;
 use App\Http\Middleware\IsAdminMiddleware;
+use App\Http\Controllers\FilterController;
+
+Route::get('/checkout', function () {
+    return view('checkout');
+});
+Route::post('/checkout', [CheckoutController::class, 'checkout'])->name('checkout');
+
+Route::get('/payment/success', function () {
+    return 'Payment Successful!';
+})->name('payment.success');
+
+Route::get('/payment/cancel', function () {
+    return 'Payment Canceled.';
+})->name('payment.cancel');
+
+Route::get('/apply-filters', [FilterController::class, 'apply'])->name('apply.filters');
 
 //Anonyme
 Route::view('/', 'landingpage')->name('home');
