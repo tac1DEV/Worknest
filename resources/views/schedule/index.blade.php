@@ -1,27 +1,40 @@
 <x-layouts.anonyme :title="__('Calendrier des réservations')">
-    <div class="container mt-5">
-        <div class="row">
-            <h1 class="text-3xl font-bold text-gray-900">Calendrier des réservations</h1>
-            <div class="my-4 col-md-6">
-            <h2 class="text-xl font-bold text-gray-900">Color picker</h2>
-            <div class="flex gap-4 items-center">
-                <input type="color" id="myColor" class='h-12 w-12 rounded-lg shadow-inner' name="colorpicker"
-                    onchange="myFunction()" />
-                <!-- The text field -->
-                <input type="text" id="myInput" class="hidden" />
+    <div class="container">
+<div class="row">
+    <h1 class="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 mb-2">
+        Calendrier des réservations
+    </h1>
 
-                <!-- The button used to copy the text -->
-                <button onclick="copyToClipboard()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+    <div class="my-2 col-md-6">
+        <h2 class="text-base sm:text-lg font-bold text-gray-900 mb-1">
+            Color picker
+        </h2>
 
-                    <span class="tooltiptext" id="myTooltip">Copier la couleur</span>
-                </button>
-            </div>
-            </div>
+        <div class="flex items-center gap-2 sm:gap-3">
+            <input
+                type="color"
+                id="myColor"
+                class="h-8 w-8 sm:h-10 sm:w-10 rounded-md shadow-inner"
+                name="colorpicker"
+                onchange="myFunction()"
+            />
+
+            <input type="text" id="myInput" class="hidden" />
+
+            <button
+                onclick="copyToClipboard()"
+                class="text-sm sm:text-base bg-blue-500 hover:bg-blue-700 text-white font-semibold py-1.5 px-3 sm:py-2 sm:px-4 rounded"
+            >
+                <span id="myTooltip">Copier la couleur</span>
+            </button>
         </div>
+    </div>
+</div>
 
-        <div class="card">
-            <div class="card-body">
-                <div id="calendar" style="width: 100%;height:100vh"></div>
+
+        <div class="relative flex flex-col min-w-0 break-words bg-white">
+            <div class="flex-1 lg:p-10 p-2">
+                <div id="calendar"></div>
             </div>
         </div>
     </div>
@@ -47,6 +60,8 @@
             },
             initialView: 'dayGridMonth',
             locale: 'fr',
+            height: '70vh',
+            aspectRatio: 4,
             events: '/events',
             editable: true,
             selectable: true,
