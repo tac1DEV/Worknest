@@ -11,7 +11,7 @@
                 <input type="text" id="myInput" class="hidden" />
 
                 <!-- The button used to copy the text -->
-                <button onclick="copyToClipboard()" onmouseout="outFunc()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                <button onclick="copyToClipboard()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
 
                     <span class="tooltiptext" id="myTooltip">Copier la couleur</span>
                 </button>
@@ -46,6 +46,7 @@
                 right: ''
             },
             initialView: 'dayGridMonth',
+            locale: 'fr',
             events: '/events',
             editable: true,
             selectable: true,
@@ -53,16 +54,26 @@
                 var title = prompt('Event Title:');
                 var color = prompt("Color", "#0d6efd");
                 if (title && color) {
-                    //alert('selected ' + info.startStr + ' to ' + info.endStr);
-                    $.ajax({
-                        url: "/create-schedule",
-                        data: 'title=' + title + '&start=' + info.startStr + '&end=' + info.endStr + '&color=' + color + '&_token=' + "{{ csrf_token() }}",
-                        type: "post",
-                        success: function (data) {
-                            alert("Added Successfully");
-                            calendar.refetchEvents(); // Refresh events
-                        }
-                    });
+var startDate = new Date(info.startStr);
+startDate.setMinutes(startDate.getMinutes() - startDate.getTimezoneOffset());
+var startStr = startDate.toISOString().slice(0, 19).replace('T', ' ');
+
+$.ajax({
+    url: "/create-schedule",
+    type: "POST",
+    data: {
+        title: title,
+        start: startStr,
+        end: info.endStr,
+        color: color,
+        _token: "{{ csrf_token() }}"
+    },
+    success: function(data) {
+        alert("Added Successfully");
+        calendar.refetchEvents(); // Refresh events
+    }
+});
+
 
                 }
             },
@@ -71,6 +82,8 @@
                 var eventId = info.event.id;
                 var newStartDate = info.event.start;
                 var newEndDate = info.event.end || newStartDate;
+                newStartDate.setMinutes(newStartDate.getMinutes()-newStartDate.getTimezoneOffset());
+                newEndDate.setMinutes(newEndDate.getMinutes()-newEndDate.getTimezoneOffset());
                 var newStartDateUTC = newStartDate.toISOString().slice(0, 10);
                 var newEndDateUTC = newEndDate.toISOString().slice(0, 10);
 
@@ -123,6 +136,7 @@
                 };
             },
         });
+        
         calendar.render();
         //color picker
         function myFunction() {
@@ -144,11 +158,6 @@
 
             var tooltip = document.getElementById("myTooltip");
             tooltip.innerHTML = "Copié: " + copyText.value;
-        }
-
-        function outFunc() {
-            var tooltip = document.getElementById("myTooltip");
-            tooltip.innerHTML = "Copier la couleur";
         }
 
     </script>
