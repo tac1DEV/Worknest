@@ -8,11 +8,21 @@ use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\EspaceController;
 use App\Http\Middleware\IsAdminMiddleware;
 use App\Http\Controllers\FilterController;
+use App\Http\Controllers\ScheduleController;
+
+Route::controller(ScheduleController::class)->group(function () {
+    Route::get('/fullcalendar', 'index')->name('schedule.index');
+    Route::post('/create-schedule', 'store')->name('schedule.store');
+    Route::get('/events', 'getEvents')->name('schedule.events');
+    Route::post('/schedule/{id}', 'update')->name('schedule.update');
+    Route::get('/schedule/delete/{id}', 'deleteEvent')->name('schedule.deleteEvent');
+});
+
+
 
 Route::get('/checkout', function () {
     return view('checkout');
 });
-Route::post('/checkout', [CheckoutController::class, 'checkout'])->name('checkout');
 
 Route::get('/payment/success', function () {
     return 'Payment Successful!';
