@@ -61,7 +61,7 @@
             initialView: 'dayGridMonth',
             locale: 'fr',
             height: '70vh',
-            aspectRatio: 4,
+            longPressDelay: 1000,
             events: '/events',
             editable: true,
             selectable: true,
