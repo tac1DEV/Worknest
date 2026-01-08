@@ -10,6 +10,15 @@ use App\Http\Middleware\IsAdminMiddleware;
 use App\Http\Controllers\FilterController;
 use App\Http\Controllers\ScheduleController;
 
+Route::get('/err', function () {
+    return abort(419);
+})->name('go-back');
+
+Route::get('/go-back', function () {
+    return redirect()->back();
+})->name('go-back');
+
+
 Route::controller(ScheduleController::class)->group(function () {
     Route::get('/fullcalendar', 'index')->name('schedule.index');
     Route::post('/create-schedule', 'store')->name('schedule.store');
@@ -17,8 +26,6 @@ Route::controller(ScheduleController::class)->group(function () {
     Route::post('/schedule/{id}', 'update')->name('schedule.update');
     Route::get('/schedule/delete/{id}', 'deleteEvent')->name('schedule.deleteEvent');
 });
-
-
 
 Route::get('/checkout', function () {
     return view('checkout');
