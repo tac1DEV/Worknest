@@ -26,23 +26,10 @@ class ScheduleController extends Controller
             'espace_id' => $request->espace_id,
             'user_id' => Auth::id(),
         ]);
-        return redirect()->route("schedule.index");
 
-        // return response()->json(['success' => true]);
+        return response()->json(['success' => true]);
     }
 
-    // public function getEvents($id)
-    // {
-    //     $userId = Auth::id();
-    //     $espace = Espace::findOrFail($id);
-    //     $schedules = Schedule::where([
-    //         'user_id' => $userId,
-    //         'espace_id' => $espace
-    //     ]);
-    //     // dd($userId); //2
-    //     dd($espace); //2
-    //     return response()->json($schedules);
-    // }
     public function getEvents(Request $request)
     {
         return Schedule::where('espace_id', $request->espace_id)
@@ -51,7 +38,8 @@ class ScheduleController extends Controller
                 'title',
                 'start',
                 'end',
-                'color'
+                'color',
+                'user_id'
             ]);
     }
 
@@ -65,15 +53,18 @@ class ScheduleController extends Controller
             'end' => Carbon::parse($request->input('end_date'))->setTimezone('UTC'),
         ]);
 
-        return response()->json(['message' => 'Event moved successfully']);
+        return response()->json(['message' => 'Réservation modifié avec succès.']);
     }
 
     public function deleteEvent($id)
     {
         $schedule = Schedule::findOrFail($id);
+        if ($schedule->user_id !== auth()->id()) {
+            abort(403);
+        }
         $schedule->delete();
 
-        return response()->json(['message' => 'Event deleted successfully']);
+        return response()->json(['message' => 'Réservation supprimée avec succès.']);
     }
 
     public function calendar(Schedule $schedule, Espace $espace)

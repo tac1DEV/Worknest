@@ -44,6 +44,7 @@
         var calendarEl = document.getElementById('calendar');
         var events = [];
         var espaceId = @json($espace->id);
+        var currentUserId = @json(Auth::id());
         var calendar = new FullCalendar.Calendar(calendarEl, {
             headerToolbar: {
                 left: '',
@@ -73,6 +74,7 @@
                             end: info.endStr,
                             color: color,
                             espace_id: espaceId,
+                            user_id: currentUserId,
                             _token: "{{ csrf_token() }}"
                         },
                         success: function (data) {
@@ -117,6 +119,12 @@
             },
             // Deleting The Event
             eventContent: function (info) {
+                var eventUserId = info.event.extendedProps.user_id;
+                if (eventUserId !== currentUserId) {
+                    return {
+                        domNodes: [document.createTextNode(info.event.title)]
+                    };
+                }
                 var eventTitle = info.event.title;
                 var eventElement = document.createElement('div');
                 eventElement.innerHTML = '<span style="cursor: pointer;">❌</span> ' + eventTitle;
