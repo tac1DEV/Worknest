@@ -9,6 +9,12 @@ use App\Http\Controllers\EspaceController;
 use App\Http\Middleware\IsAdminMiddleware;
 use App\Http\Controllers\FilterController;
 use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\StripeController;
+
+
+Route::get('/stripe', [StripeController::class, 'index'])->name('stripe.index');
+Route::get('/stripe/payment', [StripeController::class, 'payment'])->name('stripe.payment');
+Route::get('/stripe/payment/success', [StripeController::class, 'success'])->name('stripe.payment.success');
 
 Route::get('/err', function () {
     return abort(419);

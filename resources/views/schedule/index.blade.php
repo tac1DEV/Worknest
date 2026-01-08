@@ -59,8 +59,8 @@
             editable: true,
             selectable: true,
             select: function (info) {
-                var title = prompt('Event Title:');
-                var color = prompt("Color", "#0d6efd");
+                var title = prompt('Titre de la réservation:');
+                var color = prompt("Choisissez une couleur", "#0d6efd");
                 if (title && color) {
                     var startDate = new Date(info.startStr);
                     startDate.setMinutes(startDate.getMinutes() - startDate.getTimezoneOffset());
@@ -78,11 +78,15 @@
                             _token: "{{ csrf_token() }}"
                         },
                         success: function (data) {
-                            window.location.replace("/stripe");
-                            calendar.refetchEvents(); // Refresh events
+                            console.log(data);
+                            //URL DEGUEU
+                            // const params = new URLSearchParams({ result: JSON.stringify(data) }).toString();
+                            // window.location.replace(`/stripe?${params}`);
+                            sessionStorage.setItem('stripeData', JSON.stringify(data));
+                            window.location.replace('/stripe');
                         },
                         error: function (error, data) {
-                            console.error('Error adding event:', data);
+                            console.error('Erreur lors de la création de la réservation:', data);
                         }
                     });
 
@@ -110,10 +114,10 @@
                     success: function (response) {
                         alert(response.message);
                         console.log(newStartDateUTC, newEndDateUTC);
-                        console.log('Event moved successfully.');
+                        console.log('La réservation a été modifiée.');
                     },
                     error: function (error) {
-                        console.error('Error moving event:', error);
+                        console.error('Erreur lors de la modification de la réservation:', error);
                     }
                 });
             },
@@ -130,7 +134,7 @@
                 eventElement.innerHTML = '<span style="cursor: pointer;">❌</span> ' + eventTitle;
 
                 eventElement.querySelector('span').addEventListener('click', function () {
-                    if (confirm("Are you sure you want to delete this event?")) {
+                    if (confirm("Voulez-vous vraiment supprimer cette réservation ?")) {
                         var eventId = info.event.id;
                         $.ajax({
                             method: 'get',
@@ -140,11 +144,11 @@
                             },
                             success: function (response) {
                                 alert(response.message);
-                                console.log('Event deleted successfully.');
+                                console.log('Réservation supprimée.');
                                 calendar.refetchEvents(); // Refresh events after deletion
                             },
                             error: function (error) {
-                                console.error('Error deleting event:', error);
+                                console.error('Erreur lors de la suppression de la réservation:', error);
                             }
                         });
                     }

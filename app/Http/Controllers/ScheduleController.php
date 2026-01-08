@@ -18,7 +18,9 @@ class ScheduleController extends Controller
 
     public function store(Request $request)
     {
-        Schedule::create([
+        $espace = Espace::findOrFail($request->espace_id);
+
+        $schedule = Schedule::create([
             'title' => $request->title,
             'start' => $request->start,
             'end' => $request->end,
@@ -27,8 +29,18 @@ class ScheduleController extends Controller
             'user_id' => Auth::id(),
         ]);
 
-        return response()->json(['success' => true]);
+        $schedule->load('espace.categorie'); // charge la catégorie pour le calcul
+        $prix = $this->calculerPrix($schedule);
+
+        return response()->json([
+            'title' => $request->title,
+            'start' => Carbon::parse($request->start)->format('d/m/Y'),
+            'end' => Carbon::parse($request->end)->format('d/m/Y'),
+            'espace' => $espace->nom,
+            'prix' => $prix,
+        ]);
     }
+
 
     public function getEvents(Request $request)
     {
@@ -70,5 +82,19 @@ class ScheduleController extends Controller
     public function calendar(Schedule $schedule, Espace $espace)
     {
         return view('reservations.calendar', compact('reservation', 'espace'));
+    }
+
+    public function calculerPrix($schedule)
+    {
+        // Calculer la durée en jours
+        $start = Carbon::parse($schedule->start)->startOfDay();
+        $end = Carbon::parse($schedule->end)->startOfDay();
+        $days = $start->diffInDays($end);
+
+        // Prix basé sur la catégorie de l'espace
+        $prixParJour = $schedule->espace->categorie->prix;
+        $total = $days * $prixParJour;
+
+        return $total;
     }
 }
