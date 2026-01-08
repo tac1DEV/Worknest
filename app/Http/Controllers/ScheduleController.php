@@ -1,35 +1,60 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Espace;
 use App\Models\Schedule;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\Request;
 
 class ScheduleController extends Controller
 {
-    public function index()
+    public function index($espaceId)
     {
-        return view('schedule.index');
+        $espace = Espace::findOrFail($espaceId);
+        return view('schedule.index', compact('espace'));
     }
 
     public function store(Request $request)
     {
-        $item = new Schedule();
-        $item->title = $request->title;
-        $item->start = $request->start;
-        $item->end = $request->end;
-        $item->color = $request->color;
-        $item->save();
-
+        Schedule::create([
+            'title' => $request->title,
+            'start' => $request->start,
+            'end' => $request->end,
+            'color' => $request->color,
+            'espace_id' => $request->espace_id,
+            'user_id' => Auth::id(),
+        ]);
         return redirect()->route("schedule.index");
+
+        // return response()->json(['success' => true]);
     }
 
-    public function getEvents()
+    // public function getEvents($id)
+    // {
+    //     $userId = Auth::id();
+    //     $espace = Espace::findOrFail($id);
+    //     $schedules = Schedule::where([
+    //         'user_id' => $userId,
+    //         'espace_id' => $espace
+    //     ]);
+    //     // dd($userId); //2
+    //     dd($espace); //2
+    //     return response()->json($schedules);
+    // }
+    public function getEvents(Request $request)
     {
-        $schedules = Schedule::all();
-        return response()->json($schedules);
+        return Schedule::where('espace_id', $request->espace_id)
+            ->get([
+                'id',
+                'title',
+                'start',
+                'end',
+                'color'
+            ]);
     }
+
 
     public function update(Request $request, $id)
     {
@@ -49,5 +74,10 @@ class ScheduleController extends Controller
         $schedule->delete();
 
         return response()->json(['message' => 'Event deleted successfully']);
+    }
+
+    public function calendar(Schedule $schedule, Espace $espace)
+    {
+        return view('reservations.calendar', compact('reservation', 'espace'));
     }
 }

@@ -16,8 +16,6 @@ class EspaceController extends Controller
     {
         $espaces = Espace::all();
         $categorie = Espace::find(1)->categorie;
-        // dd($categorie);
-        // $espacesUsers = Espace::where('disponible', true)->get();
         $espacesUsers = QueryBuilder::for(Espace::where('disponible', true))
             ->allowedFilters('ecran', 'capacite', 'tableau_blanc', AllowedFilter::exact('categorie.prix'))
             ->get();

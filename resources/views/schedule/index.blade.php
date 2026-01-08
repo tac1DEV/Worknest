@@ -1,37 +1,28 @@
-<x-layouts.anonyme :title="__('Calendrier des réservations')">
+<x-layouts.app :title="'Calendrier - ' . $espace->nom">
     <div class="container">
-<div class="row">
-    <h1 class="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 mb-2">
-        Calendrier des réservations
-    </h1>
+        <div class="row">
+            <h1 class="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 mb-2">
+                Calendrier des réservations
+            </h1>
 
-    <div class="my-2 col-md-6">
-        <h2 class="text-base sm:text-lg font-bold text-gray-900 mb-1">
-            Color picker
-        </h2>
+            <div class="my-2 col-md-6">
+                <h2 class="text-base sm:text-lg font-bold text-gray-900 mb-1">
+                    Color picker
+                </h2>
 
-        <div class="flex items-center gap-2 sm:gap-3">
-            <input
-                type="color"
-                id="myColor"
-                class="h-8 w-8 sm:h-10 sm:w-10 rounded-md shadow-inner"
-                name="colorpicker"
-                onchange="myFunction()"
-            />
+                <div class="flex items-center gap-2 sm:gap-3">
+                    <input type="color" id="myColor" class="h-8 w-8 sm:h-10 sm:w-10 rounded-md shadow-inner"
+                        name="colorpicker" onchange="myFunction()" />
 
-            <input type="text" id="myInput" class="hidden" />
+                    <input type="text" id="myInput" class="hidden" />
 
-            <button
-                onclick="copyToClipboard()"
-                class="text-sm sm:text-base bg-blue-500 hover:bg-blue-700 text-white font-semibold py-1.5 px-3 sm:py-2 sm:px-4 rounded"
-            >
-                <span id="myTooltip">Copier la couleur</span>
-            </button>
+                    <button onclick="copyToClipboard()"
+                        class="text-sm sm:text-base bg-blue-500 hover:bg-blue-700 text-white font-semibold py-1.5 px-3 sm:py-2 sm:px-4 rounded">
+                        <span id="myTooltip">Copier la couleur</span>
+                    </button>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
-
-
         <div class="relative flex flex-col min-w-0 break-words bg-white">
             <div class="flex-1 lg:p-10 p-2">
                 <div id="calendar"></div>
@@ -52,6 +43,7 @@
 
         var calendarEl = document.getElementById('calendar');
         var events = [];
+        var espaceId = @json($espace->id);
         var calendar = new FullCalendar.Calendar(calendarEl, {
             headerToolbar: {
                 left: '',
@@ -62,32 +54,35 @@
             locale: 'fr',
             height: '70vh',
             longPressDelay: 1000,
-            events: '/events',
+            events: `/events?espace_id=${espaceId}`,
             editable: true,
             selectable: true,
             select: function (info) {
                 var title = prompt('Event Title:');
                 var color = prompt("Color", "#0d6efd");
                 if (title && color) {
-var startDate = new Date(info.startStr);
-startDate.setMinutes(startDate.getMinutes() - startDate.getTimezoneOffset());
-var startStr = startDate.toISOString().slice(0, 19).replace('T', ' ');
-
-$.ajax({
-    url: "/create-schedule",
-    type: "POST",
-    data: {
-        title: title,
-        start: startStr,
-        end: info.endStr,
-        color: color,
-        _token: "{{ csrf_token() }}"
-    },
-    success: function(data) {
-        alert("Added Successfully");
-        calendar.refetchEvents(); // Refresh events
-    }
-});
+                    var startDate = new Date(info.startStr);
+                    startDate.setMinutes(startDate.getMinutes() - startDate.getTimezoneOffset());
+                    var startStr = startDate.toISOString().slice(0, 19).replace('T', ' ');
+                    $.ajax({
+                        url: "/create-schedule",
+                        type: "POST",
+                        data: {
+                            title: title,
+                            start: startStr,
+                            end: info.endStr,
+                            color: color,
+                            espace_id: espaceId,
+                            _token: "{{ csrf_token() }}"
+                        },
+                        success: function (data) {
+                            window.location.replace("/stripe");
+                            calendar.refetchEvents(); // Refresh events
+                        },
+                        error: function (error, data) {
+                            console.error('Error adding event:', data);
+                        }
+                    });
 
 
                 }
@@ -97,8 +92,8 @@ $.ajax({
                 var eventId = info.event.id;
                 var newStartDate = info.event.start;
                 var newEndDate = info.event.end || newStartDate;
-                newStartDate.setMinutes(newStartDate.getMinutes()-newStartDate.getTimezoneOffset());
-                newEndDate.setMinutes(newEndDate.getMinutes()-newEndDate.getTimezoneOffset());
+                newStartDate.setMinutes(newStartDate.getMinutes() - newStartDate.getTimezoneOffset());
+                newEndDate.setMinutes(newEndDate.getMinutes() - newEndDate.getTimezoneOffset());
                 var newStartDateUTC = newStartDate.toISOString().slice(0, 10);
                 var newEndDateUTC = newEndDate.toISOString().slice(0, 10);
 
@@ -151,7 +146,7 @@ $.ajax({
                 };
             },
         });
-        
+
         calendar.render();
         //color picker
         function myFunction() {
@@ -176,4 +171,4 @@ $.ajax({
         }
 
     </script>
-</x-layouts.anonyme>
+</x-layouts.app>

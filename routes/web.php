@@ -18,15 +18,6 @@ Route::get('/go-back', function () {
     return redirect()->back();
 })->name('go-back');
 
-
-Route::controller(ScheduleController::class)->group(function () {
-    Route::get('/fullcalendar', 'index')->name('schedule.index');
-    Route::post('/create-schedule', 'store')->name('schedule.store');
-    Route::get('/events', 'getEvents')->name('schedule.events');
-    Route::post('/schedule/{id}', 'update')->name('schedule.update');
-    Route::get('/schedule/delete/{id}', 'deleteEvent')->name('schedule.deleteEvent');
-});
-
 Route::get('/checkout', function () {
     return view('checkout');
 });
@@ -49,6 +40,15 @@ Route::get('/espaces', [EspaceController::class, 'index'])->name('espaces.index'
 
 //Connecté
 Route::middleware(['auth'])->group(function () {
+
+    Route::controller(ScheduleController::class)->group(function () {
+        Route::get('/espaces/{id}/calendar', 'index')->name('schedule.index');
+        Route::post('/create-schedule', 'store')->name('schedule.store');
+        Route::get('/events', 'getEvents')->name('schedule.events');
+        Route::post('/schedule/{id}', 'update')->name('schedule.update');
+        Route::get('/schedule/delete/{id}', 'deleteEvent')->name('schedule.deleteEvent');
+    });
+
     Route::redirect('settings', 'settings/profile');
     Route::view('dashboard', 'dashboard')->name('dashboard');
 

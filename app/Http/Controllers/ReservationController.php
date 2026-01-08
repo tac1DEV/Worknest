@@ -33,7 +33,7 @@ class ReservationController extends Controller
         Reservation::create([
             'date_debut' => $request->input('date_debut'),
             'date_fin' => $request->input('date_fin'),
-            'utilisateurs_id' => $request->input('utilisateurs_id'),
+            'users_id' => $request->input('users_id'),
             'espaces_id' => $request->input('espaces_id'),
         ]);
 

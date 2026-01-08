@@ -12,5 +12,5 @@
         <label for="tableau_blanc">Tableau blanc:</label>
         <p>{{$espace->tableau_blanc ? 'oui' : 'non'}}</p>
     </div>
-    <a href="{{ route('reservations.calendar', $espace->id) }}">Voir planning</a>
+    <a href="{{ route('schedule.index', $espace) }}">Voir planning</a>
 </x-layouts.app>

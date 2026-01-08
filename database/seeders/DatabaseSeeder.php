@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Categorie;
 use App\Models\Espace;
 use App\Models\Reservation;
+use App\Models\Schedule;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
@@ -50,5 +51,6 @@ class DatabaseSeeder extends Seeder
         User::factory(10)->create();
         Espace::factory(10)->create();
         Reservation::factory(10)->create();
+        Schedule::factory(10)->create();
     }
 }

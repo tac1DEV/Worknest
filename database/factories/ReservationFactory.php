@@ -20,7 +20,7 @@ class ReservationFactory extends Factory
         return [
             'date_debut' => $dateDebut,
             'date_fin' => $dateDebut->copy()->addHour(),
-            'utilisateurs_id' => rand(1, 6),
+            'users_id' => rand(1, 6),
             'espaces_id' => rand(1, 6),
         ];
     }

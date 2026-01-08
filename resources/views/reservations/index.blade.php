@@ -15,7 +15,7 @@
                 <tr>
                     <td>{{ $reservation->date_debut }}</td>
                     <td>{{ $reservation->date_fin }}</td>
-                    <td>{{ $reservation->utilisateurs_id }}</td>
+                    <td>{{ $reservation->users_id }}</td>
                     <td>{{ $reservation->espaces_id }}</td>
                     <td class="flex">
                         <a href="{{ route('reservations.edit', $reservation) }}">Edit</a>
