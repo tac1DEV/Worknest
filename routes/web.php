@@ -12,11 +12,7 @@ use App\Http\Controllers\ScheduleController;
 
 Route::get('/err', function () {
     return abort(419);
-})->name('go-back');
-
-Route::get('/go-back', function () {
-    return redirect()->back();
-})->name('go-back');
+});
 
 Route::get('/checkout', function () {
     return view('checkout');
