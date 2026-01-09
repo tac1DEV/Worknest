@@ -11,27 +11,6 @@ use App\Http\Controllers\FilterController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\StripeController;
 
-
-Route::get('/stripe', [StripeController::class, 'index'])->name('stripe.index');
-Route::get('/stripe/payment', [StripeController::class, 'payment'])->name('stripe.payment');
-Route::get('/stripe/payment/success', [StripeController::class, 'success'])->name('stripe.payment.success');
-
-Route::get('/err', function () {
-    return abort(419);
-});
-
-Route::get('/checkout', function () {
-    return view('checkout');
-});
-
-Route::get('/payment/success', function () {
-    return 'Payment Successful!';
-})->name('payment.success');
-
-Route::get('/payment/cancel', function () {
-    return 'Payment Canceled.';
-})->name('payment.cancel');
-
 //Filtres
 Route::get('/apply-filters', [FilterController::class, 'apply'])->name('apply.filters');
 
@@ -42,6 +21,10 @@ Route::get('/espaces', [EspaceController::class, 'index'])->name('espaces.index'
 
 //Connecté
 Route::middleware(['auth'])->group(function () {
+
+    Route::get('/stripe', [StripeController::class, 'index'])->name('stripe.index');
+    Route::get('/stripe/payment', [StripeController::class, 'payment'])->name('stripe.payment');
+    Route::get('/stripe/payment/success', [StripeController::class, 'success'])->name('stripe.payment.success');
 
     Route::controller(ScheduleController::class)->group(function () {
         Route::get('/espaces/{id}/calendar', 'index')->name('schedule.index');
@@ -57,8 +40,8 @@ Route::middleware(['auth'])->group(function () {
     Volt::route('settings/profile', 'settings.profile')->name('profile.edit');
     Volt::route('settings/password', 'settings.password')->name('user-password.edit');
     Volt::route('settings/appearance', 'settings.appearance')->name('appearance.edit');
-    Volt::route('settings/reservations', 'settings.reservations')->name('reservations.edit');
-    Volt::route('settings/historique', 'settings.historique')->name('historique.edit');
+    // Volt::route('settings/reservations', 'settings.reservations')->name('reservations.edit');
+    // Volt::route('settings/historique', 'settings.historique')->name('historique.edit');
 
 
     Route::resource('reservations', ReservationController::class);
