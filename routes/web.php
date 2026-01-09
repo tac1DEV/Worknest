@@ -10,6 +10,8 @@ use App\Http\Middleware\IsAdminMiddleware;
 use App\Http\Controllers\FilterController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\StripeController;
+use App\Http\Controllers\FactureController;
+
 
 //Filtres
 Route::get('/apply-filters', [FilterController::class, 'apply'])->name('apply.filters');
@@ -21,6 +23,8 @@ Route::get('/espaces', [EspaceController::class, 'index'])->name('espaces.index'
 
 //Connecté
 Route::middleware(['auth'])->group(function () {
+
+    Route::get('/facture', [FactureController::class, 'show']);
 
     Route::get('/stripe', [StripeController::class, 'index'])->name('stripe.index');
     Route::get('/stripe/payment', [StripeController::class, 'payment'])->name('stripe.payment');
