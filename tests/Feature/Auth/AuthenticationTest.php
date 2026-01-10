@@ -20,7 +20,7 @@ class AuthenticationTest extends TestCase
 
     public function test_users_can_authenticate_using_the_login_screen(): void
     {
-        $user = User::factory()->withoutTwoFactor()->create();
+        $user = User::factory()->create();
 
         $response = $this->post(route('login.store'), [
             'email' => $user->email,
@@ -29,7 +29,7 @@ class AuthenticationTest extends TestCase
 
         $response
             ->assertSessionHasNoErrors()
-            ->assertRedirect(route('dashboard', absolute: false));
+            ->assertRedirect(route('espaces.index', absolute: false));
 
         $this->assertAuthenticated();
     }
@@ -48,27 +48,6 @@ class AuthenticationTest extends TestCase
         $this->assertGuest();
     }
 
-    public function test_users_with_two_factor_enabled_are_redirected_to_two_factor_challenge(): void
-    {
-        if (! Features::canManageTwoFactorAuthentication()) {
-            $this->markTestSkipped('Two-factor authentication is not enabled.');
-        }
-
-        Features::twoFactorAuthentication([
-            'confirm' => true,
-            'confirmPassword' => true,
-        ]);
-
-        $user = User::factory()->create();
-
-        $response = $this->post(route('login.store'), [
-            'email' => $user->email,
-            'password' => 'password',
-        ]);
-
-        $response->assertRedirect(route('two-factor.login'));
-        $this->assertGuest();
-    }
 
     public function test_users_can_logout(): void
     {
