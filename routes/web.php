@@ -51,11 +51,7 @@ Route::middleware(['auth'])->group(function () {
         ->as('admin.')
         ->middleware(IsAdminMiddleware::class)
         ->group(function () {
-
-            Route::get('/', function () {
-                return redirect()->route('admin.dashboard');
-            });
-
+    
             Route::view('dashboard', 'dashboard')->name('dashboard');
 
             Route::resource('espaces', EspaceController::class);
