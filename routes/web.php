@@ -4,14 +4,12 @@ use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 use Livewire\Volt\Volt;
 use App\Http\Controllers\CategorieController;
-use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\EspaceController;
 use App\Http\Middleware\IsAdminMiddleware;
 use App\Http\Controllers\FilterController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\StripeController;
 use App\Http\Controllers\FactureController;
-
 
 //Filtres
 Route::get('/apply-filters', [FilterController::class, 'apply'])->name('apply.filters');
@@ -24,7 +22,9 @@ Route::get('/espaces', [EspaceController::class, 'index'])->name('espaces.index'
 //Connecté
 Route::middleware(['auth'])->group(function () {
 
-    Route::get('/facture/{schedule}', [FactureController::class, 'show']);
+    Route::get('/profile/reservations', [ScheduleController::class, 'liste'])->name('profile.reservations');
+
+    Route::get('/facture/{schedule}', [FactureController::class, 'show'])->name('reservation.facture');
 
     Route::get('/stripe', [StripeController::class, 'index'])->name('stripe.index');
     Route::get('/stripe/payment', [StripeController::class, 'payment'])->name('stripe.payment');
@@ -39,16 +39,10 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::redirect('settings', 'settings/profile');
-    Route::view('dashboard', 'dashboard')->name('dashboard');
-
     Volt::route('settings/profile', 'settings.profile')->name('profile.edit');
     Volt::route('settings/password', 'settings.password')->name('user-password.edit');
     Volt::route('settings/appearance', 'settings.appearance')->name('appearance.edit');
 
-
-    Route::resource('reservations', ReservationController::class);
-    Route::get('/reservations/{espace}/calendar', [ReservationController::class, 'calendar'])
-        ->name('reservations.calendar');
     //liste + detail
     Route::resource('espaces', EspaceController::class)->except(['index']);
 

@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Reservation;
+use App\Models\Schedule;
 use App\Models\Espace;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ReservationController extends Controller
 {
@@ -13,7 +14,8 @@ class ReservationController extends Controller
      */
     public function index()
     {
-        $reservations = Reservation::all();
+        $user = Auth::id();
+        $reservations = Schedule::where('user_id', $user)->get();
         return view('reservations.index', compact('reservations'));
     }
 

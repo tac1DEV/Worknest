@@ -16,6 +16,13 @@ class ScheduleController extends Controller
         return view('schedule.index', compact('espace'));
     }
 
+    public function liste()
+    {
+        $user = Auth::id();
+        $schedules = Schedule::where('user_id', $user)->orderBy('created_at', 'desc')->get();
+        return view('schedule.liste', compact('schedules'));
+    }
+
     public function store(Request $request)
     {
         $espace = Espace::findOrFail($request->espace_id);

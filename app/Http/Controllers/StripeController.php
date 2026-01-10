@@ -44,7 +44,7 @@ class StripeController extends Controller
         $stripe = new \Stripe\StripeClient(env("STRIPE_SECRET"));
         $response = $stripe->checkout->sessions->retrieve($request->session_id);
 
-        return redirect()->route("reservations.edit")->with("success", "Payment accepted.");
+        return redirect()->route("profile.reservations")->with("success", "Votre réservation a bien été enregistrée.");
     }
 
 }

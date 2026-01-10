@@ -29,16 +29,17 @@
                 </flux:navlist.group>
             </flux:navlist>
         @else
-            <a href="{{  route('dashboard') }}" class="me-5 flex items-center space-x-2 rtl:space-x-reverse" wire:navigate>
+            <a href="{{  route('espaces.index') }}" class="me-5 flex items-center space-x-2 rtl:space-x-reverse" wire:navigate>
                 <x-app-logo />
             </a>
 
             <flux:navlist variant="outline">
                 <flux:navlist.group :heading="__('Onglets')" class="grid">
-                    <flux:navlist.item icon="home" :href=" route('dashboard')" :current="request()->routeIs('dashboard')"
-                        wire:navigate>{{ __('Page d\'accueil') }}</flux:navlist.item>
                     <flux:navlist.item icon="clipboard-list" :href=" route('espaces.index')"
                         :current="request()->routeIs('espaces.index')" wire:navigate>{{ __('Espaces') }}</flux:navlist.item>
+                    <flux:navlist.item icon="notebook-pen" :href=" route('profile.reservations')"
+                        :current="request()->routeIs('profile.reservations')" wire:navigate>{{ __('Mes réservations') }}
+                    </flux:navlist.item>
                 </flux:navlist.group>
             </flux:navlist>
         @endif
