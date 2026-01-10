@@ -16,18 +16,17 @@ class EspaceController extends Controller
     {
         $espaces = Espace::all();
         $url = asset('images/espace.svg');
-        $categorie = Espace::find(1)->categorie;
         $espacesUsers = QueryBuilder::for(Espace::where('disponible', true))
             ->allowedFilters('ecran', 'capacite', 'tableau_blanc', AllowedFilter::exact('categorie.prix'))
             ->get();
 
         if (!auth()->check()) {
-            return view('espaces.index', compact('espacesUsers','url'));
+            return view('espaces.index', compact('espacesUsers', 'url'));
         }
         if (auth()->user()->role !== 'admin') {
-            return view('espaces.index', compact('espacesUsers','url'));
+            return view('espaces.index', compact('espacesUsers', 'url'));
         }
-        return view('admin.espaces.index', compact('espaces', 'espacesUsers'));
+        return view('admin.espaces.index', compact('espaces'));
     }
 
     /**
