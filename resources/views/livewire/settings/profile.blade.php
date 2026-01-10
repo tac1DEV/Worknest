@@ -40,9 +40,6 @@ new #[Title('Profile')] class extends Component {
         ]);
         $user->fill($validated);
 
-        if ($user->isDirty('email')) {
-            $user->email_verified_at = null;
-        }
         Auth::user()->update([
             'name' => $validated['name'],
             'email' => $validated['email'],
