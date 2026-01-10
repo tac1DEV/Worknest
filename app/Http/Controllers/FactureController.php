@@ -7,12 +7,16 @@ use LaravelDaily\Invoices\Classes\Party;
 use LaravelDaily\Invoices\Classes\InvoiceItem;
 use App\Models\Schedule;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class FactureController extends Controller
 {
-    public function show($schedule)
+    public function show($scheduleId)
     {
-        $schedule = Schedule::findOrFail($schedule);
+        $schedule = Schedule::findOrFail($scheduleId);
+        if (Auth::id() !== $schedule->user->id) {
+            abort(403);
+        }
         $siren = fake()->siren();
         $numero_de_commande = rand(1000, 65000);
         $code = rand(10000000, 99000000);
