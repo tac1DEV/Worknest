@@ -13,7 +13,8 @@ class ScheduleController extends Controller
     public function index($espaceId)
     {
         $espace = Espace::findOrFail($espaceId);
-        return view('schedule.index', compact('espace'));
+        $schedules = $espace->schedules;
+        return view('schedule.index', compact('espace', 'schedules'));
     }
 
     public function liste()

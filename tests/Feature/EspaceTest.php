@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\Espace;
 use App\Models\Categorie;
+use App\Models\Schedule;
 use PHPUnit\Framework\Attributes\Test;
 
 
@@ -24,10 +25,27 @@ class EspaceTest extends TestCase
             'tableau_blanc' => 0,
         ]);
         $response = $this->get('/espaces');
-        $response->assertStatus(200);
-        $response->assertViewHas('espacesUsers', function ($collection) use ($espace) {
-            return $collection->contains($espace);
-        });
+        $response->assertStatus(200)
+            ->assertViewHas('espacesUsers', function ($collection) use ($espace) {
+                return $collection->contains($espace);
+            });
+    }
+
+    public function test_espace_indisponible(): void
+    {
+        $espace = Espace::factory()->create([
+            'nom' => 'PRENOM UNIQUE',
+            'disponible' => 0,
+            'capacite' => 100,
+            'ecran' => 1,
+            'tableau_blanc' => 0,
+        ]);
+        $response = $this->get('/espaces');
+        $response->assertStatus(200)
+            ->assertViewHas('espacesUsers', function ($collection) use ($espace) {
+                return !$collection->contains($espace);
+            })
+            ->assertDontSee($espace->nom);
     }
     public function test_filtres_espaces_par_capacite()
     {
@@ -148,5 +166,106 @@ class EspaceTest extends TestCase
             });
     }
 
+    public function test_anonyme_ne_peut_pas_consulter_un_espace()
+    {
+        $espace = Espace::factory()->create([
+            'nom' => 'Salle Atlas',
+            'capacite' => 50,
+        ]);
 
+        $response = $this->get("/espaces/{$espace->id}");
+
+        $response->assertStatus(302);
+    }
+
+    public function test_utilisateur_connecte_peut_consulter_un_espace()
+    {
+        $user = \App\Models\User::factory()->create();
+
+        // Connecte l'utilisateur
+        $this->actingAs($user);
+
+        $espace = Espace::factory()->create([
+            'nom' => 'Salle Atlas',
+            'capacite' => 50,
+        ]);
+
+        $response = $this->get("/espaces/{$espace->id}");
+
+        $this->assertTrue(auth()->check());
+        $response->assertStatus(200);
+    }
+
+    public function test_la_page_affiche_les_informations_completes_de_lespace()
+    {
+        $user = \App\Models\User::factory()->create();
+        // Connecte l'utilisateur
+        $this->actingAs($user);
+
+        $espace = Espace::factory()->create([
+            'nom' => 'Salle Atlas',
+            'disponible' => 1,
+            'capacite' => 50,
+            'ecran' => 1,
+            'tableau_blanc' => 1,
+        ]);
+
+        $response = $this->get("/espaces/{$espace->id}");
+
+        $this->assertTrue(auth()->check());
+        $response->assertStatus(200)
+            ->assertViewIs('espaces.show')
+            ->assertViewHas('espace', function ($viewEspace) use ($espace) {
+                return $viewEspace->id === $espace->id
+                    && $viewEspace->nom === $espace->nom
+                    && $viewEspace->capacite === $espace->capacite
+                    && $viewEspace->ecran === $espace->ecran
+                    && $viewEspace->tableau_blanc === $espace->tableau_blanc;
+            });
+    }
+
+    public function test_la_page_affiche_le_planning_de_disponibilite()
+    {
+        $user = \App\Models\User::factory()->create();
+        $this->actingAs($user);
+
+        $espace = Espace::factory()->create();
+
+        $planning = Schedule::factory()->create([
+            'espace_id' => $espace->id,
+            'user_id' => $user->id,
+        ]);
+
+        $response = $this->get("/espaces/{$espace->id}/calendar");
+
+        $response->assertStatus(200)
+            ->assertViewHas('espace', $espace)
+            ->assertViewHas('schedules', function ($schedules) use ($planning) {
+                return $schedules->contains(function ($s) use ($planning) {
+                    return $s->id === $planning->id;
+                });
+            });
+
+        $this->assertTrue(auth()->check());
+    }
+
+    public function test_un_identifiant_inexistant_retourne_une_404()
+    {
+        $user = \App\Models\User::factory()->create();
+        // Connecte l'utilisateur
+        $this->actingAs($user);
+        $response = $this->get('/espaces/999999');
+
+        $this->assertTrue(auth()->check());
+        $response->assertStatus(404);
+    }
+
+    public function test_redirection_si_anonyme()
+    {
+        $espace = Espace::factory()->create();
+
+        // Aucun actingAs()
+        $response = $this->get("/espaces/{$espace->id}");
+        $response->assertStatus(302);
+    }
 }
