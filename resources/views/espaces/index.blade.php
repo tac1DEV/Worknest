@@ -4,6 +4,7 @@
         <table>
             <thead>
                 <tr>
+                    <th>Image</th>
                     <th>Nom de l'espace</th>
                     <th>Capacité</th>
                     <th>Écran</th>
@@ -15,6 +16,7 @@
             <tbody>
                 @foreach($espacesUsers as $espace)
                     <tr>
+                        <td><img src="{{$url}}" alt="image placeholder" class="w-20"></td>
                         <td>{{ $espace->nom }}</td>
                         <td>{{ $espace->capacite}}</td>
                         <td>{{ $espace->ecran ? 'oui' : 'non'}}</td>
