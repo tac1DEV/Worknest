@@ -24,7 +24,7 @@ Route::get('/espaces', [EspaceController::class, 'index'])->name('espaces.index'
 //Connecté
 Route::middleware(['auth'])->group(function () {
 
-    Route::get('/facture', [FactureController::class, 'show']);
+    Route::get('/facture/{schedule}', [FactureController::class, 'show']);
 
     Route::get('/stripe', [StripeController::class, 'index'])->name('stripe.index');
     Route::get('/stripe/payment', [StripeController::class, 'payment'])->name('stripe.payment');
@@ -44,8 +44,6 @@ Route::middleware(['auth'])->group(function () {
     Volt::route('settings/profile', 'settings.profile')->name('profile.edit');
     Volt::route('settings/password', 'settings.password')->name('user-password.edit');
     Volt::route('settings/appearance', 'settings.appearance')->name('appearance.edit');
-    // Volt::route('settings/reservations', 'settings.reservations')->name('reservations.edit');
-    // Volt::route('settings/historique', 'settings.historique')->name('historique.edit');
 
 
     Route::resource('reservations', ReservationController::class);

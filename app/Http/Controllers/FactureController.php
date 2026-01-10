@@ -10,9 +10,9 @@ use Carbon\Carbon;
 
 class FactureController extends Controller
 {
-    public function show($scheduleId = 2)
+    public function show($schedule)
     {
-        $schedule = Schedule::findOrFail($scheduleId);
+        $schedule = Schedule::findOrFail($schedule);
         $siren = fake()->siren();
         $numero_de_commande = rand(1000, 65000);
         $code = rand(10000000, 99000000);
