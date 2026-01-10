@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\Categorie;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Espace>
@@ -24,7 +25,7 @@ class EspaceFactory extends Factory
             'capacite' => $capacite[array_rand($capacite)],
             'ecran' => rand(0, 1),
             'tableau_blanc' => rand(0, 1),
-            'categorie_id' => rand(1, 3),
+            'categorie_id' => Categorie::factory(),
         ];
     }
 }

@@ -38,15 +38,8 @@ class DatabaseSeeder extends Seeder
                 $user
             );
         }
-        $categories = ['Standard', 'Premium', 'VIP'];
-        $prix = [10, 45, 100];
 
-        foreach ($categories as $index => $nom) {
-            Categorie::create([
-                'nom_categorie' => $nom,
-                'prix' => $prix[$index],
-            ]);
-        }
+
 
         User::factory(10)->create();
         Espace::factory(10)->create();
