@@ -45,7 +45,7 @@ class EspaceController extends Controller
         Espace::create([
             'nom' => $request->input('nom'),
             'disponible' => $request->has('disponible'),
-            'categories_id' => $request->input('categories_id'),
+            'categorie_id' => $request->input('categorie_id'),
             'capacite' => $request->input('capacite'),
             'ecran' => $request->has('ecran'),
             'tableau_blanc' => $request->has('tableau_blanc')
@@ -92,7 +92,7 @@ class EspaceController extends Controller
     public function destroy(Espace $espace)
     {
         $espace->delete();
-        return redirect()->route('espaces.index');
+        return redirect()->route('admin.espaces.index');
     }
 
 }

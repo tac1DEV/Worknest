@@ -8,6 +8,7 @@ use Tests\TestCase;
 use App\Models\Espace;
 use App\Models\Categorie;
 use App\Models\Schedule;
+use App\Models\User;
 use PHPUnit\Framework\Attributes\Test;
 
 
@@ -370,5 +371,96 @@ class EspaceTest extends TestCase
             'user_id' => $user->id,
             'espace_id' => $espace->id,
         ]);
+    }
+
+    public function test_admin_peut_creer_un_espace(): void
+    {
+        $categorie = Categorie::factory()->create(['prix' => 10]);
+
+        $adminUser = User::factory()->create([
+            'role' => 'admin'
+        ]);
+        $this->actingAs($adminUser);
+
+        $response = $this->post(route('espaces.store'), [
+            'nom' => 'Salle Test',
+            'capacite' => 50,
+            'disponible' => 1,
+            'ecran' => 1,
+            'tableau_blanc' => 0,
+            'categorie_id' => $categorie->id,
+        ]);
+
+        $response->assertStatus(302)
+            ->assertRedirect(route('admin.espaces.index'));
+
+        $this->assertDatabaseHas('espaces', [
+            'nom' => 'Salle Test',
+            'capacite' => 50,
+            'categorie_id' => $categorie->id,
+        ]);
+    }
+
+    public function test_admin_peut_modifier_un_espace(): void
+    {
+        $categorie = Categorie::factory()->create(['prix' => 20]);
+        $adminUser = User::factory()->create(['role' => 'admin']);
+        $this->actingAs($adminUser);
+
+        $espace = Espace::factory()->create([
+            'nom' => 'Salle Originale',
+            'capacite' => 30,
+            'categorie_id' => $categorie->id,
+        ]);
+
+        $response = $this->put(route('espaces.update', $espace), [
+            'nom' => 'Salle Modifiée',
+            'capacite' => 40,
+            'disponible' => 1,
+            'ecran' => 1,
+            'tableau_blanc' => 1,
+            'categorie_id' => $categorie->id,
+        ]);
+
+        $response->assertStatus(302)
+            ->assertRedirect(route('admin.espaces.index'));
+
+        $this->assertDatabaseHas('espaces', [
+            'id' => $espace->id,
+            'nom' => 'Salle Modifiée',
+            'capacite' => 40,
+        ]);
+    }
+
+    public function test_admin_peut_supprimer_un_espace(): void
+    {
+        $categorie = Categorie::factory()->create();
+        $adminUser = User::factory()->create(['role' => 'admin']);
+        $this->actingAs($adminUser);
+
+        $espace = Espace::factory()->create([
+            'nom' => 'Salle à Supprimer',
+            'categorie_id' => $categorie->id,
+        ]);
+
+        $response = $this->delete(route('espaces.destroy', $espace));
+
+        $response->assertStatus(302)
+            ->assertRedirect(route('admin.espaces.index'));
+
+        $this->assertDatabaseMissing('espaces', [
+            'id' => $espace->id,
+        ]);
+    }
+    public function test_utilisateur_non_admin_ne_peut_pas_acceder_aux_routes_admin(): void
+    {
+        $user = User::factory()->create([
+            'role' => 'client',
+        ]);
+
+        $this->actingAs($user);
+
+        $response = $this->get(route('admin.dashboard'));
+        $response->assertStatus(403);
     }
 }

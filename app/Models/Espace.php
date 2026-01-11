@@ -15,7 +15,8 @@ class Espace extends Model
         'disponible',
         'capacite',
         'ecran',
-        'tableau_blanc'
+        'tableau_blanc',
+        'categorie_id'
     ];
 
     public function categorie(): BelongsTo
