@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Services\StripeService;
 
 class StripeController extends Controller
 {
@@ -12,31 +13,13 @@ class StripeController extends Controller
         return view('stripe.index');
     }
 
-    public function payment(Request $request)
+    public function payment(Request $request, StripeService $stripe)
     {
-        $stripe = new \Stripe\StripeClient(env("STRIPE_SECRET"));
+        $url = $stripe->createCheckout($request->only('title', 'price'));
 
-        $successURL = Route('stripe.payment.success') . '?session_id={CHECKOUT_SESSION_ID}';
-
-        $response = $stripe->checkout->sessions->create([
-            'success_url' => $successURL,
-            'line_items' => [
-                [
-                    'price_data' => [
-                        "currency" => "EUR",
-                        "product_data" => [
-                            'name' => $request->title,
-                        ],
-                        "unit_amount" => $request->price * 100
-                    ],
-                    'quantity' => 1,
-                ],
-            ],
-            'mode' => 'payment',
-        ]);
-
-        return redirect($response['url']);
+        return redirect($url);
     }
+
 
     public function success(Request $request)
     {

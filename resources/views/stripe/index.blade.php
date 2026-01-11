@@ -1,17 +1,3 @@
-<!-- @session("success")
-    <div>{{ $value }}</div>
-@endsession -->
-<!--<a href="{{ route('stripe.payment', ['price' => 100]) }}">Make Payment</a> Rendre dynamique (price)
-<script>
-    const data = JSON.parse(sessionStorage.getItem('stripeData'));
-    if (!data) {
-        console.error('Aucune donnée Stripe');
-    } else {
-        console.log(data);
-    }
-</script>
--->
-
 <x-layouts.app :title="__('Récap')">
 
     <div class="flex justify-center items-center text-center">
