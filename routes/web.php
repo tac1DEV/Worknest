@@ -22,6 +22,8 @@ Route::get('/espaces', [EspaceController::class, 'index'])->name('espaces.index'
 //Connecté
 Route::middleware(['auth'])->group(function () {
 
+    Route::get('/', [EspaceController::class, 'index']);
+
     Route::get('/profile/reservations', [ScheduleController::class, 'liste'])->name('profile.reservations');
 
     Route::get('/facture/{schedule}', [FactureController::class, 'show'])->name('reservation.facture');
@@ -51,7 +53,7 @@ Route::middleware(['auth'])->group(function () {
         ->as('admin.')
         ->middleware(IsAdminMiddleware::class)
         ->group(function () {
-    
+
             Route::view('dashboard', 'dashboard')->name('dashboard');
 
             Route::resource('espaces', EspaceController::class);
