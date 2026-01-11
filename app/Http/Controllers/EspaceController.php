@@ -26,7 +26,7 @@ class EspaceController extends Controller
         if (auth()->user()->role !== 'admin') {
             return view('espaces.index', compact('espacesUsers', 'url'));
         }
-        return view('admin.espaces.index', compact('espaces'));
+        return view('admin.espaces.index', compact('espaces', 'url'));
     }
 
     /**
@@ -59,7 +59,8 @@ class EspaceController extends Controller
      */
     public function show(Espace $espace)
     {
-        return view('espaces.show', compact('espace'));
+        $url = asset('images/espace.svg');
+        return view('espaces.show', compact('espace', 'url'));
     }
 
     /**

@@ -19,9 +19,10 @@ class ScheduleController extends Controller
 
     public function liste()
     {
+        $url = asset('images/espace.svg');
         $user = Auth::id();
         $schedules = Schedule::where('user_id', $user)->orderBy('created_at', 'desc')->get();
-        return view('schedule.liste', compact('schedules'));
+        return view('schedule.liste', compact('schedules', 'url'));
     }
 
     public function store(Request $request)

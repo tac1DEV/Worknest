@@ -1,34 +1,43 @@
 <x-layouts.app :title="'Calendrier - ' . $espace->nom">
-    <div class="container">
-        <div class="row">
-            <h1 class="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 mb-2">
-                Calendrier des réservations
-            </h1>
+    <div class="min-h-screen">
+        <div>
+            <div class="mb-6">
+                <a href="{{ route('espaces.show', $espace->id) }}"
+                    class="inline-flex items-center text-cyan-500 hover:underline mb-3">
+                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                    </svg>
+                    Retour
+                </a>
+                <h2 class="text-2xl font-bold text-cyan-500">{{ $espace->nom }}</h2>
+                <p class="text-gray-600 mt-1">Calendrier des réservations</p>
+            </div>
 
-            <div class="my-2 col-md-6">
-                <h2 class="text-base sm:text-lg font-bold text-gray-900 mb-1">
-                    Color picker
-                </h2>
-
-                <div class="flex items-center gap-2 sm:gap-3">
-                    <input type="color" id="myColor" class="h-8 w-8 sm:h-10 sm:w-10 rounded-md shadow-inner"
-                        name="colorpicker" onchange="myFunction()" />
-
+            <div>
+                <h3 class="text-lg font-semibold text-gray-800 mb-4">Personnaliser la couleur</h3>
+                <div class="flex items-center gap-4">
+                    <div class="flex items-center gap-3">
+                        <label for="myColor" class="text-sm text-gray-600">Couleur:</label>
+                        <input type="color" id="myColor"
+                            class="h-12 w-12 rounded-lg border-2 border-gray-200 cursor-pointer hover:border-cyan-500 transition-colors"
+                            name="colorpicker" onchange="myFunction()" />
+                    </div>
                     <input type="text" id="myInput" class="hidden" />
-
                     <button onclick="copyToClipboard()"
-                        class="text-sm sm:text-base bg-blue-500 hover:bg-blue-700 text-white font-semibold py-1.5 px-3 sm:py-2 sm:px-4 rounded">
+                        class="px-4 py-2 bg-cyan-500 text-white rounded-lg font-medium hover:bg-cyan-600 transition-colors">
                         <span id="myTooltip">Copier la couleur</span>
                     </button>
                 </div>
             </div>
-        </div>
-        <div class="relative flex flex-col min-w-0 break-words bg-white">
-            <div class="flex-1 lg:p-10 p-2">
-                <div id="calendar"></div>
+
+            <div>
+                <div class="p-4 lg:p-6">
+                    <div id="calendar"></div>
+                </div>
             </div>
         </div>
     </div>
+
     <script src="https://code.jquery.com/jquery-3.7.1.js"
         integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.17/index.global.min.js'></script>
