@@ -43,7 +43,6 @@ class DatabaseSeeder extends Seeder
 
         User::factory(10)->create();
         Espace::factory(10)->create();
-        Reservation::factory(10)->create();
         Schedule::factory(10)->create();
     }
 }
