@@ -15,6 +15,7 @@ class EspaceTest extends TestCase
 {
     use RefreshDatabase;
 
+    //  1. Consultation & catalogue des espaces
     public function test_liste_espaces(): void
     {
         $espace = Espace::factory()->create([
@@ -165,7 +166,7 @@ class EspaceTest extends TestCase
                 return $collection->contains($espace_pas_cher);
             });
     }
-
+    // 2. Détail d’un espace
     public function test_anonyme_ne_peut_pas_consulter_un_espace()
     {
         $espace = Espace::factory()->create([
@@ -267,5 +268,107 @@ class EspaceTest extends TestCase
         // Aucun actingAs()
         $response = $this->get("/espaces/{$espace->id}");
         $response->assertStatus(302);
+    }
+
+    // 3. Réservation d’un espace
+    public function test_creation_d_une_reservation_valide()
+    {
+        $user = \App\Models\User::factory()->create();
+        $this->actingAs($user);
+
+        $espace = Espace::factory()->create();
+
+        $response = $this->post('/create-schedule', [
+            'title' => 'Réservation test',
+            'start' => now()->addDay()->setHour(9)->toDateTimeString(),
+            'end' => now()->addDay()->setHour(12)->toDateTimeString(),
+            'color' => '#ff0000',
+            'espace_id' => $espace->id,
+        ]);
+
+        $response->assertStatus(200);
+
+        $this->assertDatabaseHas('schedules', [
+            'title' => 'Réservation test',
+            'espace_id' => $espace->id,
+            'user_id' => $user->id,
+        ]);
+    }
+
+    public function test_refus_d_un_creneau_deja_reserve()
+    {
+        $user = \App\Models\User::factory()->create();
+        $this->actingAs($user);
+
+        $espace = Espace::factory()->create();
+
+        Schedule::create([
+            'title' => 'Déjà pris',
+            'start' => now()->addDay()->setHour(9),
+            'end' => now()->addDay()->setHour(12),
+            'color' => '#000',
+            'espace_id' => $espace->id,
+            'user_id' => $user->id,
+        ]);
+
+        $response = $this->post('/schedules', [
+            'title' => 'Conflit',
+            'start' => now()->addDay()->setHour(10)->toDateTimeString(),
+            'end' => now()->addDay()->setHour(11)->toDateTimeString(),
+            'color' => '#f00',
+            'espace_id' => $espace->id,
+        ]);
+
+        $response->assertSessionHasErrors();
+
+        $this->assertEquals(1, Schedule::count());
+    }
+
+    public function test_validation_des_dates_et_horaires()
+    {
+        $user = \App\Models\User::factory()->create();
+        $this->actingAs($user);
+
+        $espace = Espace::factory()->create();
+
+        // end < start
+        $response = $this->post('/schedules', [
+            'title' => 'Invalide',
+            'start' => now()->addDay()->setHour(12),
+            'end' => now()->addDay()->setHour(9),
+            'espace_id' => $espace->id,
+        ]);
+
+        $response->assertSessionHasErrors(['start', 'end']);
+
+        // date passée
+        $response = $this->post('/schedules', [
+            'title' => 'Passé',
+            'start' => now()->subDay(),
+            'end' => now()->subDay()->addHour(),
+            'espace_id' => $espace->id,
+        ]);
+
+        $response->assertSessionHasErrors(['start']);
+    }
+
+    public function test_la_reservation_est_associee_a_l_utilisateur_connecte()
+    {
+        $user = \App\Models\User::factory()->create();
+        $this->actingAs($user);
+
+        $espace = Espace::factory()->create();
+
+        $this->post('/create-schedule', [
+            'title' => 'User link',
+            'start' => now()->addDay()->setHour(9),
+            'end' => now()->addDay()->setHour(11),
+            'espace_id' => $espace->id,
+        ]);
+
+        $this->assertDatabaseHas('schedules', [
+            'user_id' => $user->id,
+            'espace_id' => $espace->id,
+        ]);
     }
 }
