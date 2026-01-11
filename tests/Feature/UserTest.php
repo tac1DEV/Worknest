@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Espace;
+use App\Models\Schedule;
 
 class UserTest extends TestCase
 {
@@ -57,4 +58,63 @@ class UserTest extends TestCase
 
         $this->assertEquals('client', $client->role);
     }
+
+    public function test_utilisateur_connecte_peut_acceder_a_l_historique_des_reservations(): void
+    {
+        $espace = Espace::factory()->create();
+        $user = User::factory()->create();
+        $schedule = Schedule::factory()->create([
+            'espace_id' => $espace->id,
+            'user_id' => $user->id,
+        ]);
+        $this->actingAs($user);
+
+
+        $response = $this->get(route('profile.reservations'));
+
+        $response->assertStatus(200)
+            ->assertSee('Début de la réservation')
+            ->assertSee('Fin de la réservation')
+            ->assertSee('Utilisateur')
+            ->assertSee('Espace')
+            ->assertSee('Modifier')
+            ->assertSee('Facture');
+    }
+
+
+    public function test_utilisateur_connecte_peut_acceder_a_une_facture(): void
+    {
+        $espace = Espace::factory()->create();
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $schedule = Schedule::factory()->create([
+            'espace_id' => $espace->id,
+            'user_id' => $user->id,
+        ]);
+
+        $expectedUri = '/facture/' . $schedule->id;
+        $actualUri = route('reservation.facture', $schedule, false); // false = URI relative
+
+        $this->assertEquals($expectedUri, $actualUri);
+
+        // Accès à la page
+        $response = $this->get($expectedUri);
+
+        $response->assertStatus(200);
+    }
+
+
+    public function test_page_reservations_affiche_un_message_quand_aucune_reservation(): void
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $response = $this->get(route('profile.reservations'));
+
+        $response->assertStatus(200)
+            ->assertSee('Aucune réservation pour le moment'); // Vérifie qu'un message s'affiche si vide
+    }
+
+
 }

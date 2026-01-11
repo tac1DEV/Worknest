@@ -6,19 +6,19 @@
     @endif
 
     <a href="{{ route('espaces.index') }}">Réserver un espace</a>
-    <table>
-        <thead>
-            <tr>
-                <th>Début de la réservation</th>
-                <th>Fin de la réservation</th>
-                <th>Utilisateur</th>
-                <th>Espace</th>
-                <th>Modifier</th>
-                <th>Facture</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($schedules as $schedule)
+    @forelse($schedules as $schedule)
+        <table>
+            <thead>
+                <tr>
+                    <th>Début de la réservation</th>
+                    <th>Fin de la réservation</th>
+                    <th>Utilisateur</th>
+                    <th>Espace</th>
+                    <th>Modifier</th>
+                    <th>Facture</th>
+                </tr>
+            </thead>
+            <tbody>
                 <tr>
                     <td>{{ $schedule->start }}</td>
                     <td>{{ $schedule->end }}</td>
@@ -31,8 +31,11 @@
                         <a href="{{ route('reservation.facture', $schedule->id) }}">Voir la facture</a>
                     </td>
                 </tr>
-            @endforeach
-        </tbody>
-    </table>
+
+            </tbody>
+    </table> @empty
+        <p> Aucune réservation pour le moment</p>
+
+    @endforelse
 
 </x-layouts.app>
