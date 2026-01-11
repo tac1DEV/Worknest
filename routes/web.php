@@ -22,6 +22,8 @@ Route::get('/espaces', [EspaceController::class, 'index'])->name('espaces.index'
 //Connecté
 Route::middleware(['auth'])->group(function () {
 
+    // Route::get('/', [EspaceController::class, 'index'])->name('home');
+
     Route::get('/profile/reservations', [ScheduleController::class, 'liste'])->name('profile.reservations');
 
     Route::get('/facture/{schedule}', [FactureController::class, 'show'])->name('reservation.facture');
