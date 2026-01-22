@@ -72,18 +72,19 @@
 
                 <div class="grid grid-cols-3 gap-4">
                     <div>
-                        <label for="categorie_id" class="block text-cyan-500 font-semibold text-sm mb-2">Prix</label>
-                        <input type="number" min="0" step="1" name="categorie_id" id="categorie_id" required
+                        <label for="categorie_id"
+                            class="block text-cyan-500 font-semibold text-sm mb-2">Catégorie</label>
+                        <select name="categorie_id" id="categorie_id" required
                             class="w-full px-3 py-2 border-2 border-gray-200 rounded-lg focus:border-cyan-500 focus:outline-none text-gray-700">
+                            <option value="">Sélectionnez une catégorie</option>
+                            @foreach ($categories as $categorie)
+                                <option value="{{ $categorie->id }}">{{ $categorie->nom_categorie }}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div>
                         <label for="capacite" class="block text-cyan-500 font-semibold text-sm mb-2">Nb Chaise</label>
                         <input type="number" min="0" step="1" name="capacite" id="capacite" required
-                            class="w-full px-3 py-2 border-2 border-gray-200 rounded-lg focus:border-cyan-500 focus:outline-none text-gray-700">
-                    </div>
-                    <div>
-                        <label class="block text-cyan-500 font-semibold text-sm mb-2">Surface</label>
-                        <input type="number" min="0" step="1" placeholder="m²"
                             class="w-full px-3 py-2 border-2 border-gray-200 rounded-lg focus:border-cyan-500 focus:outline-none text-gray-700">
                     </div>
                 </div>

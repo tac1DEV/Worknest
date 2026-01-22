@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Espace;
+use App\Models\Categorie;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -34,7 +35,8 @@ class EspaceController extends Controller
      */
     public function create()
     {
-        return view('admin.espaces.create');
+        $categories = Categorie::all();
+        return view('admin.espaces.create', compact('categories'));
     }
 
     /**

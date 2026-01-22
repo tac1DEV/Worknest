@@ -10,8 +10,8 @@
         <flux:sidebar.toggle class="lg:hidden" icon="x-mark" />
 
         @if(auth()->user()->role === 'admin')
-            <a href="{{  route('admin.dashboard') }}" class="me-5 flex items-center space-x-2 rtl:space-x-reverse" wire
-                :navigate>
+            <a href="{{  route('admin.dashboard') }}" class="me-5 flex items-center space-x-2 rtl:space-x-reverse"
+                wire:navigate>
                 <x-app-logo />
             </a>
 
@@ -29,7 +29,8 @@
                 </flux:navlist.group>
             </flux:navlist>
         @else
-            <a href="{{  route('espaces.index') }}" class="me-5 flex items-center space-x-2 rtl:space-x-reverse" wire:navigate>
+            <a href="{{  route('espaces.index') }}" class="me-5 flex items-center space-x-2 rtl:space-x-reverse"
+                wire:navigate>
                 <x-app-logo />
             </a>
 

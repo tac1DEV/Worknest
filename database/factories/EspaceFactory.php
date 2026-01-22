@@ -25,7 +25,7 @@ class EspaceFactory extends Factory
             'capacite' => $capacite[array_rand($capacite)],
             'ecran' => rand(0, 1),
             'tableau_blanc' => rand(0, 1),
-            'categorie_id' => Categorie::factory(),
+            'categorie_id' => rand(1, 3),
         ];
     }
 }
