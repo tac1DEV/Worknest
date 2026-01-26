@@ -41,6 +41,12 @@ De plus, un espace d’administration permet la gestion complète des lieux, des
 
 - Gestion des espaces (CRUD)
 
+Un **seeder** est déjà présent dans le projet et permet de créer automatiquement un compte administrateur.
+
+Une fois le projet installé et les seeders exécutés, vous pouvez vous connecter au **backoffice** avec les identifiants suivants :
+
+- **Email** : `admin@mail.com`
+- **Mot de passe** : `password`
 ---
 
 ## 🏗️ Architecture
