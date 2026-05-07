@@ -23,6 +23,21 @@ services:
             - sail
         depends_on:
             - mysql
+
+    ngrok:
+        image: 'ngrok/ngrok:latest'
+        command:
+            - http
+            - 'laravel.test:80'
+        environment:
+            NGROK_AUTHTOKEN: '${NGROK_AUTHTOKEN}'
+        ports:
+            - '4040:4040'
+        depends_on:
+            - laravel.test
+        networks:
+            - sail
+
     mysql:
         image: 'mysql:8.4'
         ports:
@@ -48,6 +63,7 @@ services:
                 - '-p${DB_PASSWORD}'
             retries: 3
             timeout: 5s
+
     phpmyadmin:
         image: phpmyadmin/phpmyadmin
         restart: always
@@ -62,9 +78,11 @@ services:
             - mysql
         networks:
             - sail
+
 networks:
     sail:
         driver: bridge
+
 volumes:
     sail-mysql:
         driver: local
