@@ -1,63 +1,105 @@
-<x-layouts.app :title="$espace->nom">
-    <div class="min-h-screen">
+<x-layouts.app :title="__('Espaces')">
+    <div class="min-h-screen bg-white dark:bg-gray-950">
+
         <div class="px-6 py-6">
-            <div class="my-6">
-                <a href="{{ route('espaces.index') }}" class="text-cyan-500 text-sm hover:underline">
-                    ← Retour à la liste
-                </a>
-            </div>
+
             <div class="flex items-center justify-between mb-6">
-                <h2 class="text-2xl font-bold text-cyan-500">{{ $espace->nom }}</h2>
-            </div>
-            <img src="{{$url}}" alt="image placeholder" class="w-64">
-            <div class="my-6">
-                <h3 class="text-lg font-semibold text-cyan-500 mb-3">Description</h3>
-                <div class="space-y-1">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam egestas tempus nulla, a sodales orci
-                        efficitur ut. Nunc non ornare magna, eget sagittis purus. Nullam sit amet elementum urna. Donec
-                        mi tortor, viverra id fringilla at, facilisis non turpis. Donec imperdiet tellus ut sem dapibus,
-                        at tempor dolor condimentum. Integer congue euismod ipsum, a aliquet libero egestas id. Nullam
-                        accumsan lectus velit. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed
-                        faucibus risus nec est mattis tincidunt. Integer gravida sagittis diam sed rutrum. Aenean
-                        blandit id elit non consectetur. </p>
-                </div>
+                <h2 class="text-2xl font-bold text-cyan-500">
+                    Gestion des espaces
+                </h2>
 
-                <div class="flex justify-between mt-4 text-sm">
-                    <div>
-                        <div class="text-cyan-500 font-semibold">Prix</div>
-                        <div class="text-gray-700">{{ $espace->categorie->prix ?? '-' }}€</div>
-                    </div>
-                    <div>
-                        <div class="text-cyan-500 font-semibold">Nb Chaise</div>
-                        <div class="text-gray-700">{{ $espace->capacite }}</div>
-                    </div>
-                    <div>
-                        <div class="text-cyan-500 font-semibold">Surface</div>
-                        <div class="text-gray-700">-</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="mb-6">
-                <h3 class="text-lg font-semibold text-cyan-500 mb-3">Équipement</h3>
-                <div class="grid grid-cols-2 gap-3">
-                    <div class="flex items-center space-x-2">
-                        <div class="w-3 h-3 rounded-full {{ $espace->ecran ? 'bg-cyan-500' : 'bg-gray-300' }}"></div>
-                        <span class="text-sm text-gray-700">Écran</span>
-                    </div>
-                    <div class="flex items-center space-x-2">
-                        <div class="w-3 h-3 rounded-full {{ $espace->tableau_blanc ? 'bg-cyan-500' : 'bg-gray-300' }}">
-                        </div>
-                        <span class="text-sm text-gray-700">Tableau blanc</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="mt-8">
-                <a href="{{ route('schedule.index', $espace) }}"
-                    class="block w-full py-3 bg-white border-2 border-cyan-500 text-cyan-500 text-center rounded-lg font-medium hover:bg-cyan-50 transition-colors">
-                    VOIR PLANNING
+                <a href="{{ route('admin.espaces.create') }}"
+                   class="px-4 py-2 bg-cyan-500 text-white rounded-lg font-medium
+                          hover:bg-cyan-600 dark:hover:bg-cyan-600
+                          transition-colors text-sm md:text-base">
+                    Ajouter
                 </a>
+            </div>
+
+            <div class="space-y-4">
+
+                @foreach($espaces as $espace)
+                    <div class="bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-700
+                                rounded-lg p-4 hover:border-cyan-500 transition-colors">
+
+                        <div class="flex items-start justify-between">
+
+                            <div class="flex-1">
+
+                                <div class="flex justify-between">
+
+                                    <h3 class="text-sm font-semibold text-gray-800 dark:text-white mb-2">
+                                        {{ $espace->nom }}
+                                    </h3>
+
+                                    <div class="flex space-x-2 ml-4 lg:flex-row flex-col">
+
+                                        <a href="{{ route('admin.espaces.edit', $espace) }}"
+                                           class="px-3 py-1 h-fit border-2 border-cyan-500 text-cyan-500
+                                                  dark:text-cyan-400 rounded text-sm font-medium
+                                                  hover:bg-cyan-50 dark:hover:bg-gray-800
+                                                  transition-colors">
+                                            Modifier
+                                        </a>
+
+                                        <form method="POST" action="{{ route('admin.espaces.destroy', $espace) }}"
+                                              class="inline">
+                                            @csrf
+                                            @method('DELETE')
+
+                                            <button type="submit"
+                                                    onclick="return confirm('Êtes-vous sûr ?')"
+                                                    class="px-3 py-1 border-2 border-red-500 text-red-500
+                                                           rounded text-sm font-medium
+                                                           hover:bg-red-50 dark:hover:bg-red-900/20
+                                                           transition-colors">
+                                                Supprimer
+                                            </button>
+                                        </form>
+
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-2 gap-3 text-sm">
+
+                                    <div>
+                                        <span class="text-gray-500 dark:text-gray-400">Disponible:</span>
+                                        <span class="ml-2 font-medium
+                                            {{ $espace->disponible ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400' }}">
+                                            {{ $espace->disponible ? 'Oui' : 'Non' }}
+                                        </span>
+                                    </div>
+
+                                    <div>
+                                        <span class="text-gray-500 dark:text-gray-400">Capacité:</span>
+                                        <span class="ml-2 font-medium text-gray-800 dark:text-gray-200">
+                                            {{ $espace->capacite }}
+                                        </span>
+                                    </div>
+
+                                    <div>
+                                        <span class="text-gray-500 dark:text-gray-400">Écran:</span>
+                                        <span class="ml-2 font-medium
+                                            {{ $espace->ecran ? 'text-green-600 dark:text-green-400' : 'text-gray-400 dark:text-gray-500' }}">
+                                            {{ $espace->ecran ? 'Oui' : 'Non' }}
+                                        </span>
+                                    </div>
+
+                                    <div>
+                                        <span class="text-gray-500 dark:text-gray-400">Tableau blanc:</span>
+                                        <span class="ml-2 font-medium
+                                            {{ $espace->tableau_blanc ? 'text-green-600 dark:text-green-400' : 'text-gray-400 dark:text-gray-500' }}">
+                                            {{ $espace->tableau_blanc ? 'Oui' : 'Non' }}
+                                        </span>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+
             </div>
         </div>
     </div>
