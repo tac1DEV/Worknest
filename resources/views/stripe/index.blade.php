@@ -1,4 +1,4 @@
-<x-layouts.app :title="__('Récap')">
+<x-layouts::app :title="__('Récap')">
 
     <div class="flex justify-center items-center text-center">
 
@@ -82,4 +82,4 @@
 
         });
     </script>
-</x-layouts.app>
+</x-layouts::app>

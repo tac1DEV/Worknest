@@ -1,4 +1,4 @@
-<x-layouts.app :title="'Calendrier - ' . $espace->nom">
+<x-layouts::app :title="'Calendrier - ' . $espace->nom">
     <div class="min-h-screen">
         <div>
             <div class="mb-6">
@@ -192,4 +192,4 @@
         }
 
     </script>
-</x-layouts.app>
+</x-layouts::app>

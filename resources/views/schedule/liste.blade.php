@@ -1,4 +1,4 @@
-<x-layouts.app :title="__('Reservations')">
+<x-layouts::app :title="__('Reservations')">
     <div class="min-h-screen">
         <div class="px-6 py-6">
             @if(session('success'))
@@ -63,4 +63,4 @@
             @endforelse
         </div>
     </div>
-</x-layouts.app>
+</x-layouts::app>

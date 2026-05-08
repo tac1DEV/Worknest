@@ -1,4 +1,4 @@
-<x-layouts.app :title="__('Créer une catégorie')">
+<x-layouts::app :title="__('Créer une catégorie')">
     <div class="min-h-screen">
 
         <div class="px-6 py-6 max-w-2xl mx-auto">
@@ -39,4 +39,4 @@
             </form>
         </div>
     </div>
-</x-layouts.app>
+</x-layouts::app>

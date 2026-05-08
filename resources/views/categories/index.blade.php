@@ -1,4 +1,4 @@
-<x-layouts.app :title="__('Categories')">
+<x-layouts::app :title="__('Categories')">
     <div class="min-h-screen">
         <div class="px-6 py-6">
             <div class="flex items-center justify-between mb-6">
@@ -45,4 +45,4 @@
             </div>
         </div>
     </div>
-</x-layouts.app>
+</x-layouts::app>

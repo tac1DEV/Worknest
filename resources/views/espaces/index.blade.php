@@ -1,9 +1,9 @@
 @if(!auth()->check())
-    <x-layouts.anonyme :title="__('Espaces')">
+    <x-layouts::anonyme :title="__('Espaces')">
         <div class="min-h-screen">
             <div class="px-6 py-6">
                 <h2 class="text-2xl font-bold text-cyan-500 mb-4">Réserver un espace</h2>
-                <x-layouts.filter></x-layouts.filter>
+                <x-layouts::filter></x-layouts::filter>
 
                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 max-w-7xl mt-5">
                     @foreach($espacesUsers as $espace)
@@ -32,15 +32,15 @@
                 </div>
             </div>
         </div>
-    </x-layouts.anonyme>
+    </x-layouts::anonyme>
 @else
-    <x-layouts.app :title="__('Espaces')">
+    <x-layouts::app :title="__('Espaces')">
         <div class="min-h-screen">
             <div class="px-6 py-6">
                 <h2 class="text-2xl font-bold text-cyan-500 mb-4">Réserver un espace</h2>
 
 
-                <x-layouts.filter></x-layouts.filter>
+                <x-layouts::filter></x-layouts::filter>
 
                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 max-w-7xl mt-5">
                     @foreach($espacesUsers as $espace)
@@ -72,5 +72,5 @@
                 </div>
             </div>
         </div>
-    </x-layouts.app>
+    </x-layouts::app>
 @endif

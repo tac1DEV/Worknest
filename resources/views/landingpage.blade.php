@@ -1,5 +1,5 @@
 @if(!auth()->check())
-<x-layouts.anonyme :title="__('Worknest - Espaces de coworking')">
+<x-layouts::anonyme :title="__('Worknest - Espaces de coworking')">
     <div>
         <section>
             <div class="max-w-6xl mx-auto">
@@ -88,9 +88,9 @@
             </div>
         </section>
     </div>
-</x-layouts.anonyme>
+</x-layouts::anonyme>
 @else
-<x-layouts.app :title="__('Worknest - Espaces de coworking')">
+<x-layouts::app :title="__('Worknest - Espaces de coworking')">
 
     <div>
         <section>
@@ -181,5 +181,5 @@
         </section>
     </div>
 
-</x-layouts.app>
+</x-layouts::app>
 @endif

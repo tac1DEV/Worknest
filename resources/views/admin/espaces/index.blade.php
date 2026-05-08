@@ -1,4 +1,4 @@
-<x-layouts.app :title="__('Espaces')">
+<x-layouts::app :title="__('Espaces')">
     <div class="min-h-screen">
 
         <div class="px-6 py-6">
@@ -67,4 +67,4 @@
             </div>
         </div>
     </div>
-</x-layouts.app>
+</x-layouts::app>

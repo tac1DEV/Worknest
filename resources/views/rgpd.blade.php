@@ -1,5 +1,5 @@
 @if(!auth()->check())
-  <x-layouts.anonyme :title="__('Worknest - Protection des données')">
+  <x-layouts::anonyme :title="__('Worknest - Protection des données')">
     <main class="max-w-4xl mx-auto p-6 space-y-8">
 
       <header class="text-center">
@@ -116,9 +116,9 @@
 
     </main>
 
-  </x-layouts.anonyme>
+  </x-layouts::anonyme>
 @else
-  <x-layouts.app :title="__('Worknest - Protection des données')">
+  <x-layouts::app :title="__('Worknest - Protection des données')">
     <main class="max-w-4xl mx-auto p-6 space-y-8">
 
       <header class="text-center">
@@ -235,5 +235,5 @@
 
     </main>
 
-  </x-layouts.app>
+  </x-layouts::app>
 @endif

@@ -1,4 +1,4 @@
-<x-layouts.app :title="__('Modifier une catégorie')">
+<x-layouts::app :title="__('Modifier une catégorie')">
     <div class="min-h-screen">
         <div class="px-6 py-6 max-w-2xl mx-auto">
             <div class="my-6">
@@ -54,4 +54,4 @@
 
         </div>
     </div>
-</x-layouts.app>
+</x-layouts::app>
