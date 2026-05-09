@@ -7,7 +7,7 @@
 
                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 max-w-7xl mt-5">
                     @foreach($espacesUsers as $espace)
-                        <a href="{{ route('espaces.show', $espace->id) }}" class="block">
+                        <a href="{{ route('espaces.public.show', $espace->id) }}" class="block">
                             <div
                                 class="bg-white border-2 border-cyan-500 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
                                 <div class="aspect-square bg-gray-100 flex items-center justify-center">
@@ -44,7 +44,7 @@
 
                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 max-w-7xl mt-5">
                     @foreach($espacesUsers as $espace)
-                        <a href="{{ route('espaces.show', $espace->id) }}" class="block">
+                        <a href="{{ route('espaces.public.show', $espace->id) }}" class="block">
                             <div
                                 class="bg-white border-2 border-cyan-500 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
                                 <div class="aspect-square bg-gray-100 flex items-center justify-center">

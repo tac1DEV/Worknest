@@ -45,10 +45,28 @@ Route::middleware(['auth'])->group(function () {
     Volt::route('settings/password', 'settings.password')->name('user-password.edit');
     Volt::route('settings/appearance', 'settings.appearance')->name('appearance.edit');
 
-    //liste + detail
-    Route::resource('espaces', EspaceController::class)->except(['index']);
+    // //liste + detail
+    // Route::resource('espaces', EspaceController::class)->except(['index']);
 
-    //ADMIN
+    // //ADMIN
+    // Route::prefix('admin')
+    //     ->as('admin.')
+    //     ->middleware(IsAdminMiddleware::class)
+    //     ->group(function () {
+
+    //         Route::view('dashboard', 'dashboard')->name('dashboard');
+
+    //         Route::resource('espaces', EspaceController::class);
+    //         Route::resource('categories', CategorieController::class);
+    //     });
+
+    // PUBLIC (utilisateurs)
+    Route::resource('espaces', EspaceController::class)
+        ->except(['index'])
+        ->names('espaces.public');
+
+
+    // ADMIN
     Route::prefix('admin')
         ->as('admin.')
         ->middleware(IsAdminMiddleware::class)
@@ -56,7 +74,9 @@ Route::middleware(['auth'])->group(function () {
 
             Route::view('dashboard', 'dashboard')->name('dashboard');
 
-            Route::resource('espaces', EspaceController::class);
+            Route::resource('espaces', EspaceController::class)
+                ->names('espaces');
+
             Route::resource('categories', CategorieController::class);
         });
 

@@ -22,12 +22,12 @@ class EspaceController extends Controller
             ->get();
 
         if (!auth()->check()) {
-            return view('espaces.index', compact('espacesUsers', 'url'));
+            return view('espaces.public.index', compact('espacesUsers', 'url'));
         }
         if (auth()->user()->role !== 'admin') {
-            return view('espaces.index', compact('espacesUsers', 'url'));
+            return view('espaces.public.index', compact('espacesUsers', 'url'));
         }
-        return view('admin.espaces.index', compact('espaces', 'url'));
+        return view('espaces.admin.index', compact('espaces', 'url'));
     }
 
     /**
@@ -61,8 +61,9 @@ class EspaceController extends Controller
      */
     public function show(Espace $espace)
     {
+
         $url = asset('images/espace.svg');
-        return view('espaces.show', compact('espace', 'url'));
+        return view('espaces.public.show', compact('espace', 'url'));
     }
 
     /**
