@@ -19,7 +19,7 @@
                 </span>
             </div>
 
-            <form id="espace-form" method="POST" action="{{ route('admin.espaces.store') }}" class="space-y-6">
+            <form id="espace-form" method="POST" action="{{ route('espaces.admin.store') }}" class="space-y-6">
                 @csrf
 
                 <div>

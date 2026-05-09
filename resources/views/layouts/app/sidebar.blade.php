@@ -10,21 +10,21 @@
         <flux:sidebar.toggle class="lg:hidden" icon="x-mark" />
 
         @if(auth()->user()->role === 'admin')
-            <a href="{{  route('admin.dashboard') }}" class="me-5 flex items-center space-x-2 rtl:space-x-reverse"
+            <a href="{{  route('dashboard.admin') }}" class="me-5 flex items-center space-x-2 rtl:space-x-reverse"
                 wire:navigate>
                 <x-app-logo />
             </a>
 
             <flux:navlist variant="outline">
                 <flux:navlist.group :heading="__('Onglets')" class="grid">
-                    <flux:navlist.item icon="home" :href="route('admin.dashboard')"
-                        :current="request()->routeIs('admin.dashboard')" wire:navigate>{{ __('Dashboard') }}
+                    <flux:navlist.item icon="home" :href="route('dashboard.admin')"
+                        :current="request()->routeIs('dashboard.admin')" wire:navigate>{{ __('Dashboard') }}
                     </flux:navlist.item>
-                    <flux:navlist.item icon="list" :href=" route('admin.categories.index')"
-                        :current="request()->routeIs('admin.categories.index')" wire:navigate>{{ __('Categories') }}
+                    <flux:navlist.item icon="list" :href=" route('categories.index')"
+                        :current="request()->routeIs('categories.index')" wire:navigate>{{ __('Categories') }}
                     </flux:navlist.item>
-                    <flux:navlist.item icon="clipboard-list" :href=" route('admin.espaces.index')"
-                        :current="request()->routeIs('admin.espaces.index')" wire:navigate>{{ __('Espaces') }}
+                    <flux:navlist.item icon="clipboard-list" :href=" route('espaces.admin.index')"
+                        :current="request()->routeIs('espaces.admin.index')" wire:navigate>{{ __('Espaces') }}
                     </flux:navlist.item>
                 </flux:navlist.group>
             </flux:navlist>

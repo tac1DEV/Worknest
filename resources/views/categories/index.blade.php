@@ -3,7 +3,7 @@
         <div class="px-6 py-6">
             <div class="flex items-center justify-between mb-6">
                 <h2 class="text-2xl font-bold text-cyan-500">Gestion des catégories</h2>
-                <a href="{{ route('admin.categories.create') }}"
+                <a href="{{ route('categories.create') }}"
                     class="px-4 py-2 bg-cyan-500 text-white rounded-lg font-medium hover:bg-cyan-600 transition-colors">
                     Ajouter
                 </a>
@@ -18,11 +18,11 @@
                                     <h3 class="text-lg font-semibold text-gray-800">{{ $category->nom_categorie }}</h3>
                                     <div>
                                         <div class="flex space-x-2 lg:flex-row flex-col">
-                                            <a href="{{ route('admin.categories.edit', $category) }}"
+                                            <a href="{{ route('categories.edit', $category) }}"
                                                 class="px-3 py-1 border-2 border-cyan-500 text-cyan-500 rounded text-sm font-medium hover:bg-cyan-50 transition-colors">
                                                 Modifier
                                             </a>
-                                            <form method="POST" action="{{ route('admin.categories.destroy', $category) }}"
+                                            <form method="POST" action="{{ route('categories.destroy', $category) }}"
                                                 class="inline">
                                                 @csrf
                                                 @method('DELETE')

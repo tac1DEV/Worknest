@@ -392,7 +392,7 @@ class EspaceTest extends TestCase
         ]);
 
         $response->assertStatus(302)
-            ->assertRedirect(route('admin.espaces.index'));
+            ->assertRedirect(route('espaces.admin.index'));
 
         $this->assertDatabaseHas('espaces', [
             'nom' => 'Salle Test',
@@ -423,7 +423,7 @@ class EspaceTest extends TestCase
         ]);
 
         $response->assertStatus(302)
-            ->assertRedirect(route('admin.espaces.index'));
+            ->assertRedirect(route('espaces.admin.index'));
 
         $this->assertDatabaseHas('espaces', [
             'id' => $espace->id,
@@ -446,7 +446,7 @@ class EspaceTest extends TestCase
         $response = $this->delete(route('espaces.destroy', $espace));
 
         $response->assertStatus(302)
-            ->assertRedirect(route('admin.espaces.index'));
+            ->assertRedirect(route('espaces.admin.index'));
 
         $this->assertDatabaseMissing('espaces', [
             'id' => $espace->id,
@@ -460,7 +460,7 @@ class EspaceTest extends TestCase
 
         $this->actingAs($user);
 
-        $response = $this->get(route('admin.dashboard'));
+        $response = $this->get(route('dashboard.admin'));
         $response->assertStatus(403);
     }
 }

@@ -68,14 +68,13 @@ Route::middleware(['auth'])->group(function () {
 
     // ADMIN
     Route::prefix('admin')
-        ->as('admin.')
         ->middleware(IsAdminMiddleware::class)
         ->group(function () {
 
-            Route::view('dashboard', 'dashboard')->name('dashboard');
+            Route::view('dashboard', 'dashboard')->name('dashboard.admin');
 
             Route::resource('espaces', EspaceController::class)
-                ->names('espaces');
+                ->names('espaces.admin');
 
             Route::resource('categories', CategorieController::class);
         });

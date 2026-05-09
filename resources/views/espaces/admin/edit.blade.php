@@ -2,27 +2,27 @@
     <div class="min-h-screen">
         <div class="px-6 py-6 max-w-2xl mx-auto">
 
-            <form id="espace-form" method="POST" action="{{ route('admin.espaces.update', $espace) }}"
+            <form id="espace-form" method="POST" action="{{ route('espaces.admin.update', $espace) }}"
                 class="space-y-6">
                 @csrf
                 @method('PUT')
 
-            <div class="flex items-center justify-between mb-6">
-                <div>
-                    <input type="text" name="nom" id="nom" value="{{ $espace->nom }}" required
-                        class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-cyan-500 focus:outline-none text-cyan-500 font-medium placeholder-gray-400 text-sm">
-                </div>
-                <span class="px-3 py-1 text-gray-600  text-sm">
-                    <label class="flex items-center cursor-pointer">
-                        <span class="mr-2">Disponible</span>
-                        <input type="checkbox" form="espace-form" name="disponible" id="disponible" {{ $espace->disponible ? 'checked' : '' }} class="sr-only peer">
-                        <div
-                            class="peer-checked:bg-cyan-500 relative w-9 h-5 bg-neutral-quaternary peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-brand-soft dark:peer-focus:ring-brand-soft rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-buffer after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand">
-                        </div>
+                <div class="flex items-center justify-between mb-6">
+                    <div>
+                        <input type="text" name="nom" id="nom" value="{{ $espace->nom }}" required
+                            class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-cyan-500 focus:outline-none text-cyan-500 font-medium placeholder-gray-400 text-sm">
+                    </div>
+                    <span class="px-3 py-1 text-gray-600  text-sm">
+                        <label class="flex items-center cursor-pointer">
+                            <span class="mr-2">Disponible</span>
+                            <input type="checkbox" form="espace-form" name="disponible" id="disponible" {{ $espace->disponible ? 'checked' : '' }} class="sr-only peer">
+                            <div
+                                class="peer-checked:bg-cyan-500 relative w-9 h-5 bg-neutral-quaternary peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-brand-soft dark:peer-focus:ring-brand-soft rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-buffer after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand">
+                            </div>
 
-                    </label>
-                </span>
-            </div>
+                        </label>
+                    </span>
+                </div>
 
                 <div>
                     <h3 class="text-lg font-semibold text-cyan-500 mb-3">Description</h3>
@@ -94,7 +94,7 @@
                 </div>
             </form>
 
-            <form id="delete-form" method="POST" action="{{ route('admin.espaces.destroy', $espace) }}" class="hidden">
+            <form id="delete-form" method="POST" action="{{ route('espaces.admin.destroy', $espace) }}" class="hidden">
                 @csrf
                 @method('DELETE')
             </form>

@@ -2,7 +2,7 @@
     <div class="min-h-screen">
         <div class="px-6 py-6 max-w-2xl mx-auto">
             <div class="my-6">
-                <a href="{{ route('admin.categories.index') }}" class="text-cyan-500 text-sm hover:underline">
+                <a href="{{ route('categories.index') }}" class="text-cyan-500 text-sm hover:underline">
                     ← Retour à la liste
                 </a>
             </div>
@@ -10,7 +10,7 @@
                 <h2 class="text-2xl font-bold text-cyan-500">Modifier la catégorie</h2>
             </div>
 
-            <form id="category-form" method="POST" action="{{ route('admin.categories.update', $category) }}"
+            <form id="category-form" method="POST" action="{{ route('categories.update', $category) }}"
                 class="space-y-6">
                 @csrf
                 @method('PUT')
@@ -46,7 +46,7 @@
                 </div>
             </form>
 
-            <form id="delete-form" method="POST" action="{{ route('admin.categories.destroy', $category) }}"
+            <form id="delete-form" method="POST" action="{{ route('categories.destroy', $category) }}"
                 class="hidden">
                 @csrf
                 @method('DELETE')

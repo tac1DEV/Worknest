@@ -6,7 +6,7 @@
                 <h2 class="text-2xl font-bold text-cyan-500">Nouvelle catégorie</h2>
             </div>
 
-            <form method="POST" action="{{ route('admin.categories.store') }}" class="space-y-6">
+            <form method="POST" action="{{ route('categories.store') }}" class="space-y-6">
                 @csrf
 
                 <div>
@@ -27,7 +27,7 @@
                 </div>
 
                 <div class="flex space-x-4 pt-4">
-                    <a href="{{ route('admin.categories.index') }}"
+                    <a href="{{ route('categories.index') }}"
                         class="flex-1 py-3 bg-white border-2 border-gray-300 text-gray-700 text-center rounded-lg font-medium hover:bg-gray-50 transition-colors">
                         ANNULER
                     </a>

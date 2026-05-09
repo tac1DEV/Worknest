@@ -4,7 +4,7 @@
         <div class="px-6 py-6">
             <div class="flex items-center justify-between mb-6">
                 <h2 class="text-2xl font-bold text-cyan-500">Gestion des espaces</h2>
-                <a href="{{ route('admin.espaces.create') }}"
+                <a href="{{ route('espaces.admin.create') }}"
                     class="px-4 py-2 bg-cyan-500 text-white rounded-lg font-medium hover:bg-cyan-600 transition-colors text-sm md:text-base">
                     Ajouter
                 </a>
@@ -18,11 +18,11 @@
                                 <div class="flex justify-between">
                                     <h3 class="text-sm font-semibold text-gray-800 mb-2">{{ $espace->nom }}</h3>
                                     <div class="flex space-x-2 ml-4 lg:flex-row flex-col">
-                                        <a href="{{ route('admin.espaces.edit', $espace) }}"
+                                        <a href="{{ route('espaces.admin.edit', $espace) }}"
                                             class="px-3 py-1 h-fit border-2 border-cyan-500 text-cyan-500 rounded text-sm font-medium hover:bg-cyan-50 transition-colors">
                                             Modifier
                                         </a>
-                                        <form method="POST" action="{{ route('admin.espaces.destroy', $espace) }}"
+                                        <form method="POST" action="{{ route('espaces.admin.destroy', $espace) }}"
                                             class="inline">
                                             @csrf
                                             @method('DELETE')

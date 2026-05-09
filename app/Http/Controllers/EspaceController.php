@@ -36,7 +36,7 @@ class EspaceController extends Controller
     public function create()
     {
         $categories = Categorie::all();
-        return view('admin.espaces.create', compact('categories'));
+        return view('espaces.admin.create', compact('categories'));
     }
 
     /**
@@ -53,7 +53,7 @@ class EspaceController extends Controller
             'tableau_blanc' => $request->has('tableau_blanc')
         ]);
 
-        return redirect()->route('admin.espaces.index');
+        return redirect()->route('espaces.admin.index');
     }
 
     /**
@@ -71,7 +71,7 @@ class EspaceController extends Controller
      */
     public function edit(Espace $espace)
     {
-        return view('admin.espaces.edit', compact('espace'));
+        return view('espaces.admin.edit', compact('espace'));
     }
 
     /**
@@ -87,7 +87,7 @@ class EspaceController extends Controller
             'ecran' => $request->has('ecran'),
             'tableau_blanc' => $request->has('tableau_blanc')
         ]);
-        return redirect()->route('admin.espaces.index');
+        return redirect()->route('espaces.admin.index');
     }
 
     /**
@@ -96,7 +96,7 @@ class EspaceController extends Controller
     public function destroy(Espace $espace)
     {
         $espace->delete();
-        return redirect()->route('admin.espaces.index');
+        return redirect()->route('espaces.admin.index');
     }
 
 }
