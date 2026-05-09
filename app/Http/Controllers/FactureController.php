@@ -14,10 +14,10 @@ class FactureController extends Controller
     public function show($scheduleId)
     {
         $schedule = Schedule::findOrFail($scheduleId);
-        if (Auth::id() !== $schedule->user->id) {
+        if (!$schedule->user || Auth::id() !== $schedule->user->id) {
             abort(403);
         }
-        $siren = fake()->siren();
+        $siren = str_pad(rand(0, 999999999), 9, '0', STR_PAD_LEFT);
         $numero_de_commande = rand(1000, 65000);
         $code = rand(10000000, 99000000);
         $datesDebut = Carbon::parse($schedule->start)->format('d/m/Y');
@@ -46,7 +46,7 @@ class FactureController extends Controller
         $items = [
             InvoiceItem::make('Réservation du ' . $datesDebut . ' à ' . $datesFin . '.')
                 ->description($schedule->title . ' - Espace ' . $schedule->espace->nom)
-                ->pricePerUnit($schedule->espace->categorie->prix)
+                ->pricePerUnit($schedule->espace->categorie->prix ?? 0)
                 ->quantity($days),
         ];
 
@@ -66,14 +66,13 @@ class FactureController extends Controller
             ->currencyThousandsSeparator('.')
             ->currencyDecimalPoint(',')
             ->filename($seller->name . ' ' . $customer->name)
-            ->addItems($items)
-            ->logo(public_path('vendor/invoices/sample-logo.png'))
-            // You can additionally save generated invoice to configured disk
-            ->save('public');
+            ->addItems($items);
+        // ->logo(public_path('vendor/invoices/sample-logo.png'))
+        // You can additionally save generated invoice to configured disk
+        // ->save('public');
 
-        $link = $invoice->url();
+        // $link = $invoice->url();
         // Then send email to party with link
-
         // And return invoice itself to browser or have a different view
         return $invoice->stream();
     }
@@ -85,7 +84,7 @@ class FactureController extends Controller
         $days = $start->diffInDays($end);
 
         // Prix basé sur la catégorie de l'espace
-        $prixParJour = $schedule->espace->categorie->prix;
+        $prixParJour = $schedule->espace->categorie->prix ?? 0;
         $total = $days * $prixParJour;
 
         return $total;
